@@ -1,5 +1,5 @@
 {
-  "name": "citroen80",
+  "name": "citro-eighty",
   "type": "module",
   "scripts": {
     "start": "bin/server index",
@@ -24,17 +24,15 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-helmet-async": "^2.0.5",
-    "react-router": "^7.1.5",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.3"
+    "react-router": "^7.1.5"
   },
   "devDependencies": {
     "@devmoods/eslint-config": "^2.6.0",
     "@types/node": "^22.13.1",
     "eslint": "^9.20.0",
     "prettier": "^3.5.0",
-    "ts-node": "^10.9.2",
-    "tsup": "^8.3.6",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
     "vite": "^6.1.0"
   },
   "prettier": {
