@@ -1,0 +1,43 @@
+{
+  "name": "citroen80",
+  "type": "module",
+  "scripts": {
+    "start": "bin/server index",
+    "start:worker": "bin/server worker",
+    "manage": "bin/server manage",
+    "build": "pnpm run build:tsc && pnpm run build:client && pnpm build:server",
+    "build:tsc": "tsc",
+    "build:client": "NODE_ENV=production vite build --outDir dist/client",
+    "build:server": "NODE_ENV=production vite build --outDir dist/server --ssr src/entry-server.tsx",
+    "lint": "eslint",
+    "format": "prettier --write '**/*.{md,js,mjs,ts,mts,tsx,css,scss,html,yml}'",
+    "test": "NODE_ENV=test DOTENV_CONFIG_PATH=.env.test vitest"
+  },
+  "dependencies": {
+    "@devmoods/express-extras": "^0.51.0",
+    "@devmoods/fetch": "^4.0.1",
+    "@devmoods/ui": "^2.7.5",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-helmet-async": "^2.0.5",
+    "react-router": "^7.1.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  },
+  "devDependencies": {
+    "@devmoods/eslint-config": "^2.6.0",
+    "@types/node": "^22.13.1",
+    "eslint": "^9.20.0",
+    "prettier": "^3.5.0",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.3.6",
+    "vite": "^6.1.0"
+  },
+  "prettier": {
+    "singleQuote": true
+  }
+}

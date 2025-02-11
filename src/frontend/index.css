@@ -1,0 +1,24 @@
+body {
+  transition: opacity 0.1s;
+  opacity: 1;
+  visibility: visible;
+}
+
+.App {
+  max-width: 768px;
+  padding: 16px;
+  margin: 0 auto;
+  padding-top: 32px;
+}
+
+.App-header {
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 700;
+  color: #082f49;
+}

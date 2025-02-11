@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+SCRIPT=${1}
+
+if [ -z "$SCRIPT" ]; then
+  echo "Error: script name is required"
+  exit 1
+fi
+
+shift 1
+
+if [ "$NODE_ENV" = "production" ]; then
+  node --import dotenv/config --import ./dist/instrument-server.js dist/$SCRIPT.js $@
+elif echo "$*" | grep -q -- "--watch"; then
+  node_modules/.bin/tsx watch --ignore "vite.config.ts.timestamp-*.mjs" --import dotenv/config src/$SCRIPT.ts $@
+else
+  node_modules/.bin/tsx --import dotenv/config src/$SCRIPT.ts $@
+fi
