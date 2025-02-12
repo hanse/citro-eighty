@@ -173,7 +173,7 @@ function VehicleCard({
         </Button>
         {vehicle.chargeKillerEnabled && (
           <Button variant="outlined" intent="danger" onClick={handleCancel}>
-            Stop
+            Cancel
           </Button>
         )}
       </Stack>

@@ -2,16 +2,16 @@ import 'dotenv/config';
 
 import { getLogger } from '@devmoods/express-extras';
 
-import { redis } from './config.js';
+import { config, redis } from './config.js';
 import { Enode } from './enode.js';
 
 const logger = getLogger();
 
 export const enode = new Enode({
-  clientId: process.env.ENODE_CLIENT_ID!,
-  clientSecret: process.env.ENODE_CLIENT_SECRET!,
-  apiUrl: process.env.ENODE_API_URL!,
-  oauthUrl: process.env.ENODE_OAUTH_URL!,
+  clientId: config.value.ENODE_CLIENT_ID,
+  clientSecret: config.value.ENODE_CLIENT_SECRET,
+  apiUrl: config.value.ENODE_API_URL,
+  oauthUrl: config.value.ENODE_OAUTH_URL,
 });
 
 export async function killChargingAboveBatteryLevel(
