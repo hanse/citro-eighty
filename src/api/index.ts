@@ -95,7 +95,7 @@ app.post(
   auth.isAuthorized(),
   route(async () => {
     const user = auth.useCurrentUser()!;
-    logger.info('setup initiated', user);
+    logger.info('setup initiated', { user });
     const link = await enode.users.link(user.id);
     return {
       url: link.linkUrl,

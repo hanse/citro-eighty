@@ -163,8 +163,7 @@ class Users {
 
       return response.jsonData!;
     } catch (error: any) {
-      logger.info('test', { accessToken });
-      logger.error(error);
+      logger.warn('link failed', { data: error?.response?.jsonData });
       throw error;
     }
   }
