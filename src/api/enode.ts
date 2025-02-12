@@ -1,5 +1,7 @@
 import { createFetch } from '@devmoods/fetch';
 
+import { config } from './config.js';
+
 interface EnodeOptions {
   clientId: string;
   clientSecret: string;
@@ -98,6 +100,7 @@ class Vehicles {
         },
       },
     );
+
     return response.jsonData!;
   }
 
@@ -129,7 +132,7 @@ class Users {
   async link(
     userId: string,
     {
-      redirectUri = process.env.ENODE_LINK_REDIRECT_URI,
+      redirectUri = config.value.ENODE_LINK_REDIRECT_URI,
     }: { redirectUri?: string } = {},
   ) {
     const accessToken = await this.enode.getAccessToken();

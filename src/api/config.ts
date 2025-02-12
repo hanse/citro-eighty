@@ -15,6 +15,7 @@ export const config = extendConfig({
   ENODE_CLIENT_SECRET: readEnv('ENODE_CLIENT_SECRET', ''),
   ENODE_API_URL: readEnv('ENODE_API_URL', ''),
   ENODE_OAUTH_URL: readEnv('ENODE_OAUTH_URL', ''),
+  ENODE_LINK_REDIRECT_URI: readEnv('ENODE_LINK_REDIRECT_URI', ''),
 });
 
 export const postgres = createPostgres();
