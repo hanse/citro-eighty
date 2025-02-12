@@ -1,6 +1,9 @@
+import { getLogger } from '@devmoods/express-extras';
 import { createFetch } from '@devmoods/fetch';
 
 import { config } from './config.js';
+
+const logger = getLogger();
 
 interface EnodeOptions {
   clientId: string;
@@ -137,27 +140,33 @@ class Users {
   ) {
     const accessToken = await this.enode.getAccessToken();
 
-    const response = await this.enode.fetch<UsersLinkResponse>(
-      `/users/${userId}/link`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
+    try {
+      const response = await this.enode.fetch<UsersLinkResponse>(
+        `/users/${userId}/link`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            vendorType: 'vehicle',
+            scopes: [
+              'vehicle:read:data',
+              'vehicle:read:location',
+              'vehicle:control:charging',
+            ],
+            language: 'en-US',
+            redirectUri,
+          }),
         },
-        body: JSON.stringify({
-          vendorType: 'vehicle',
-          scopes: [
-            'vehicle:read:data',
-            'vehicle:read:location',
-            'vehicle:control:charging',
-          ],
-          language: 'en-US',
-          redirectUri,
-        }),
-      },
-    );
+      );
 
-    return response.jsonData!;
+      return response.jsonData!;
+    } catch (error: any) {
+      logger.info('test', { accessToken });
+      logger.error(error);
+      throw error;
+    }
   }
 }
 
