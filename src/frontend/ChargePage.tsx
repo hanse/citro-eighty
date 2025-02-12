@@ -55,7 +55,7 @@ function VehiclesList() {
     [],
   );
 
-  if (loading) {
+  if (loading && !data) {
     return (
       <Stack alignItems="center">
         <CircularProgress />

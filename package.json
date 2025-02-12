@@ -16,7 +16,7 @@
   "dependencies": {
     "@devmoods/express-extras": "^0.51.0",
     "@devmoods/fetch": "^4.0.1",
-    "@devmoods/ui": "^2.7.5",
+    "@devmoods/ui": "^2.7.6",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "dotenv": "^16.4.7",
@@ -29,7 +29,7 @@
   "devDependencies": {
     "@devmoods/eslint-config": "^2.6.0",
     "@types/node": "^22.13.1",
-    "eslint": "^9.20.0",
+    "eslint": "^9.20.1",
     "prettier": "^3.5.0",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
