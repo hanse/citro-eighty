@@ -2,7 +2,7 @@
 
 Integrate with you Citroën EV to automatically stop charging at a battery level you choose, e.g. 80%.
 
-![Screenshot](./screenshot.png)
+<img src="./screenshot.png" width="320" />
 
 ## Why?
 
