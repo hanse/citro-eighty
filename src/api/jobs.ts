@@ -1,9 +1,13 @@
-import { getLogger, type SendEmailOptions } from '@devmoods/express-extras';
-
-import { email, jobs, slack } from './config.js';
 import {
+  getLogger,
+  sql,
+  type SendEmailOptions,
+} from '@devmoods/express-extras';
+
+import { email, jobs, postgres, slack } from './config.js';
+import {
+  deactivateVehicle,
   killChargingAboveBatteryLevel,
-  updateVehicleSettings,
 } from './services.js';
 
 const logger = getLogger();
@@ -26,21 +30,25 @@ export const postSlackMessageJob = jobs.job(function postSlackMessage({
 
 interface KillChargingJobOptions {
   vehicleId: string;
-  maxCharge: number;
 }
 
 export const killChargingJob = jobs.job(async function killCharging({
   vehicleId,
-  maxCharge,
 }: KillChargingJobOptions) {
-  const isKilled = await killChargingAboveBatteryLevel(vehicleId, maxCharge);
+  const vehicle = await postgres.get<{ max_charge: number }>(
+    sql`SELECT max_charge FROM vehicles WHERE external_id = ${vehicleId}`,
+  );
+
+  const isKilled = await killChargingAboveBatteryLevel(
+    vehicleId,
+    vehicle.max_charge,
+  );
 
   if (isKilled) {
     logger.info(`Killed charging for vehicle ${vehicleId}`);
-    await updateVehicleSettings(vehicleId, (prev) => ({
-      ...prev,
-      chargeKillerEnabled: false,
-    }));
+    await postgres.transaction(async (tx) => {
+      await deactivateVehicle(tx, vehicleId);
+    });
   } else {
     logger.info('Not finished charging yet', { vehicleId });
   }

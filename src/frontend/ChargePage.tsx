@@ -20,7 +20,7 @@ interface Vehicle {
   batteryLevel: number;
   isCharging: boolean;
   desiredMaxCharge: number;
-  chargeKillerEnabled: boolean;
+  isActive: boolean;
 }
 
 export function ChargePage() {
@@ -93,18 +93,12 @@ function VehicleCard({
   onSubmit: () => void;
 }) {
   const updateChargingMutation = useMutation(
-    ({
-      maxCharge,
-      chargeKillerEnabled,
-    }: {
-      maxCharge: number;
-      chargeKillerEnabled: boolean;
-    }) => {
+    ({ maxCharge, isActive }: { maxCharge: number; isActive: boolean }) => {
       return fetch(`/charges/${vehicle.id}`, {
         method: 'PUT',
         body: JSON.stringify({
           maxCharge,
-          chargeKillerEnabled,
+          isActive,
         }),
       });
     },
@@ -116,7 +110,7 @@ function VehicleCard({
     e.preventDefault();
     await updateChargingMutation.mutate({
       maxCharge: maxCharge.value,
-      chargeKillerEnabled: true,
+      isActive: true,
     });
 
     onSubmit();
@@ -125,7 +119,7 @@ function VehicleCard({
   const handleCancel = async () => {
     await updateChargingMutation.mutate({
       maxCharge: maxCharge.value,
-      chargeKillerEnabled: false,
+      isActive: false,
     });
 
     onSubmit();
@@ -167,11 +161,11 @@ function VehicleCard({
         <Button type="submit" disabled={disabled}>
           {!vehicle.isCharging
             ? 'Not charging'
-            : vehicle.chargeKillerEnabled
+            : vehicle.isActive
               ? 'Update max charge'
               : 'Start charge killer'}
         </Button>
-        {vehicle.chargeKillerEnabled && (
+        {vehicle.isActive && (
           <Button variant="outlined" intent="danger" onClick={handleCancel}>
             Cancel
           </Button>

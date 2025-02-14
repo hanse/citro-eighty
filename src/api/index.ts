@@ -1,87 +1,22 @@
-import * as crypto from 'node:crypto';
-
 import {
   before,
-  createAuth,
   createExpressServer,
-  DoesNotExistError,
   errorHandler,
   getLogger,
   notFound,
-  PasswordlessAuthProvider,
-  RedisTokenStorage,
   route,
   validateBody,
 } from '@devmoods/express-extras';
 import { createSsrMiddleware } from '@devmoods/express-extras/vite/ssr';
 import express from 'express';
 
-import { cache, config, postgres, redis } from './config.js';
-import { sendEmailJob } from './jobs.js';
-import {
-  enode,
-  getVehicleSettings,
-  updateVehicleSettings,
-} from './services.js';
+import { auth, filterUser } from './auth.js';
+import { cache, postgres, redis } from './config.js';
+import { enode, getVehicleSettings, saveVehicle } from './services.js';
 
 export const app = express();
 
 const logger = getLogger();
-
-const sha256 = (input: string) =>
-  crypto.createHash('sha256').update(input).digest('hex');
-
-type User = Awaited<ReturnType<typeof getUserByEmail>>;
-
-const filterUser = (u: User) => u;
-
-async function getUserByEmail(email: string) {
-  const userId = sha256(email);
-  return {
-    id: userId,
-    email,
-  };
-}
-
-export const auth = createAuth({
-  tokenStorage: new RedisTokenStorage(redis),
-  getUserById: async (id) => {
-    const email = await redis.get(`user:${id}`);
-    if (!email) {
-      throw new DoesNotExistError('User does not exist');
-    }
-    return getUserByEmail(email);
-  },
-  filterUser,
-  providers: [
-    PasswordlessAuthProvider({
-      getUserByEmail: async (email) => {
-        const id = sha256(email);
-        return { id, email } as User;
-      },
-      onLoginRequest: async (user, temporaryToken) => {
-        await redis.set(`user:${user.id}`, user.email);
-        await sendEmailJob.delay({
-          to: user.email,
-          subject: 'Your login to Citro 80.',
-          message: passwordlessLoginTemplate(user, temporaryToken),
-        });
-      },
-    }),
-  ],
-});
-
-function passwordlessLoginTemplate(user: User, temporaryToken: string) {
-  return `
-Hi!
-
-Use this link to login to Citro 80:
-
-${config.value.PUBLIC_URL}/auth/magic-link/${temporaryToken}
-
-The link will expire in 1 hour.
-  `;
-}
 
 app.set('trust proxy', true);
 
@@ -114,18 +49,22 @@ app.get(
   route(async () => {
     const user = auth.useCurrentUser()!;
     const linkedVehicles = await getEnodeVehicles(user.id);
-    const settingsByVehicleId = await getVehicleSettings(
-      linkedVehicles.data.map((v) => v.id),
-    );
+    const settingsByVehicleId = await postgres.withConnection(async (tx) => {
+      return getVehicleSettings(
+        tx,
+        linkedVehicles.data.map((v) => v.id),
+      );
+    });
 
     return linkedVehicles.data.map((v) => ({
       id: v.id,
       name: v.information.displayName,
       batteryLevel: v.chargeState.batteryLevel,
       isCharging: v.chargeState.isCharging,
-      desiredMaxCharge: Number(settingsByVehicleId[v.id]['maxCharge'] || '75'),
-      chargeKillerEnabled:
-        settingsByVehicleId[v.id]['chargeKillerEnabled'] || false,
+      desiredMaxCharge: Number(
+        settingsByVehicleId[v.id]?.['maxCharge'] || '75',
+      ),
+      isActive: settingsByVehicleId[v.id]?.['isActive'] || false,
     }));
   }),
 );
@@ -137,15 +76,20 @@ app.put(
     type: 'object',
     properties: {
       maxCharge: { type: 'number' },
-      chargeKillerEnabled: { type: 'boolean' },
+      isActive: { type: 'boolean' },
     },
   }),
   route(async (req) => {
+    const user = auth.useCurrentUser()!;
     const vehicleId = req.params.vehicleId;
     const maxCharge = req.body.maxCharge;
-    const chargeKillerEnabled = req.body.chargeKillerEnabled;
-    const payload = { maxCharge, chargeKillerEnabled };
-    await updateVehicleSettings(vehicleId, payload);
+    const isActive = req.body.isActive;
+    const payload = { maxCharge, isActive };
+
+    await postgres.transaction(async (tx) => {
+      await saveVehicle(tx, user.id, vehicleId, payload);
+    });
+
     return payload;
   }),
 );

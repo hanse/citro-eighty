@@ -1,8 +1,8 @@
 import 'dotenv/config';
 
-import { getLogger } from '@devmoods/express-extras';
+import { getLogger, sql, type Transaction } from '@devmoods/express-extras';
 
-import { config, redis } from './config.js';
+import { config } from './config.js';
 import { Enode } from './enode.js';
 
 const logger = getLogger();
@@ -40,42 +40,66 @@ export async function killChargingAboveBatteryLevel(
   return false;
 }
 
-export async function getVehicleSettings(vehicleIds: string[]) {
-  const settingsByVehicleId = Object.fromEntries(
-    await Promise.all(
-      vehicleIds.map(async (vehicleId) => {
-        const settings = (await redis.get(
-          `vehicle:${vehicleId}:settings`,
-        )) as string;
-        return [
-          vehicleId,
-          JSON.parse(settings || '{}') as {
-            maxCharge: number;
-            chargeKillerEnabled: boolean;
-          },
-        ] as const;
-      }),
-    ),
+export async function getVehicleSettings(
+  tx: Transaction,
+  vehicleIds?: string[],
+) {
+  const query = sql`SELECT external_id, max_charge, is_active FROM vehicles`;
+
+  if (vehicleIds != null) {
+    query.append(sql` WHERE external_id = ANY(${vehicleIds})`);
+  }
+
+  const vehicles = await tx.all<{
+    external_id: string;
+    max_charge: number;
+    is_active: boolean;
+  }>(query);
+
+  return Object.fromEntries(
+    vehicles.map((vehicle) => [
+      vehicle.external_id,
+      { maxCharge: vehicle.max_charge, isActive: vehicle.is_active },
+    ]),
   );
-  return settingsByVehicleId;
 }
 
 interface VehicleSettings {
   maxCharge: number;
-  chargeKillerEnabled: boolean;
+  isActive: boolean;
 }
 
-export async function updateVehicleSettings(
+export async function saveVehicle(
+  tx: Transaction,
+  userId: string,
   vehicleId: string,
-  settings: VehicleSettings | ((prev: VehicleSettings) => VehicleSettings),
+  settings: Partial<VehicleSettings>,
 ) {
-  const current = await getVehicleSettings([vehicleId]);
-  await redis.set(
-    `vehicle:${vehicleId}:settings`,
-    JSON.stringify(
-      typeof settings === 'function' ? settings(current[vehicleId]) : settings,
-    ),
+  await tx.query(
+    sql`SELECT * FROM vehicles WHERE external_id = ${vehicleId} FOR UPDATE`,
   );
-  await redis.sAdd('vehicles', vehicleId);
-  return settings;
+
+  const updates = {
+    user_id: userId,
+    max_charge: settings.maxCharge,
+    is_active: settings.isActive,
+    updated_at: new Date(),
+  };
+
+  await tx.query(sql`
+    INSERT INTO vehicles ${sql.spreadInsert({
+      external_id: vehicleId,
+      ...updates,
+    })}
+    ON CONFLICT (external_id) DO UPDATE
+    SET ${sql.spreadUpdate(updates)}
+  `);
+}
+
+export async function deactivateVehicle(tx: Transaction, vehicleId: string) {
+  await tx.query(sql`
+    UPDATE vehicles
+    SET is_active = FALSE, updated_at = ${new Date()}
+    WHERE external_id = ${vehicleId}
+  `);
 }

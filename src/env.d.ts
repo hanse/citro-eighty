@@ -20,7 +20,7 @@ interface Window {
             batteryLevel: number;
             isCharging: boolean;
             desiredMaxCharge: number;
-            chargeKillerEnabled: boolean;
+            isActive: boolean;
           }[];
         }
       | undefined;
