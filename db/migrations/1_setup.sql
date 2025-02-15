@@ -21,5 +21,5 @@ CREATE TABLE vehicles (
 
 -- ROLLBACK --
 
-DROP TABLE users;
 DROP TABLE vehicles;
+DROP TABLE users;
