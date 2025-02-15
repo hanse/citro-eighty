@@ -8,6 +8,7 @@ import {
   sql,
   type Transaction,
 } from '@devmoods/express-extras';
+import { snakeToCamelCase } from '@devmoods/fetch';
 
 import { config, postgres, redis } from './config.js';
 import { sendEmailJob } from './jobs.js';
@@ -23,10 +24,13 @@ export const filterUser = (u: User) => ({
 });
 
 async function getUser(tx: Transaction, id: string) {
-  const user = await tx.get<{ id: string; email: string }>(
-    sql`SELECT id, email FROM users WHERE id = ${id}`,
-  );
-  return user;
+  const user = await tx.get<{
+    id: string;
+    email: string;
+    is_superuser: boolean;
+  }>(sql`SELECT id, email, is_superuser FROM users WHERE id = ${id}`);
+
+  return snakeToCamelCase(user);
 }
 
 export const auth = createAuth({

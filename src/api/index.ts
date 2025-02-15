@@ -8,6 +8,7 @@ import {
   validateBody,
 } from '@devmoods/express-extras';
 import { createSsrMiddleware } from '@devmoods/express-extras/vite/ssr';
+import { admin } from '@devmoods/postgres-admin';
 import express from 'express';
 
 import { auth, filterUser } from './auth.js';
@@ -24,6 +25,17 @@ app.use(before({ csrf: true }));
 app.use(auth.before());
 
 app.use('/api/auth', auth.createRouter());
+
+app.use(
+  '/admin',
+  auth.isAuthorized((u) => u.isSuperuser),
+  admin({
+    postgres,
+    uiOptions: {
+      title: 'Citro 80.',
+    },
+  }),
+);
 
 app.post(
   '/api/setup',

@@ -28,8 +28,27 @@ export class Enode {
     this.fetch = createFetch({
       getRootUrl: () => apiUrl,
     });
+
+    this.fetch.intercept({
+      response: (response) => {
+        logger.info('enode api response', {
+          code: response.status,
+          data: response.jsonData,
+        });
+      },
+    });
+
     this.fetchOauth = createFetch({
       getRootUrl: () => oauthUrl,
+    });
+
+    this.fetchOauth.intercept({
+      response: (response) => {
+        logger.info('enode oauth response', {
+          code: response.status,
+          data: response.jsonData,
+        });
+      },
     });
 
     this.accessToken = null;
