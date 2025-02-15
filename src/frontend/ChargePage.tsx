@@ -10,6 +10,7 @@ import {
   useQuery,
   useSliderState,
 } from '@devmoods/ui';
+import { type ReactNode } from 'react';
 
 import { MagicLinkLoginForm, useCurrentUser } from './Auth.js';
 import { fetch } from './fetch.js';
@@ -68,10 +69,20 @@ function VehiclesList() {
   return (
     <Stack>
       {vehicles.length === 0 && (
-        <Panel>
-          Connect your Citroën EV now to and configure the charger to stop at
-          80%.
-        </Panel>
+        <>
+          <Stack horizontal alignItems="center" justifyContent="space-between">
+            <h2 className="dmk-text-title1 dmk-text-600">
+              Your vehicle <span className="dmk-text-muted">&ndash;</span>
+            </h2>
+            <div>
+              <CircularProgress value={75} thickness={6} size={72} />
+            </div>
+          </Stack>
+          <Panel>
+            Connect your Citroën EV to the app now to configure your charger to
+            stop at 80%.
+          </Panel>
+        </>
       )}
       <Stack>
         {vehicles.map((vehicle) => (
@@ -79,8 +90,11 @@ function VehiclesList() {
         ))}
       </Stack>
       <div className="dmk-margin-top-m">
-        <LinkVehicleButton />
+        <LinkVehicleButton>
+          {vehicles.length === 0 ? 'Connect vehicle' : 'Link new vehicle'}
+        </LinkVehicleButton>
       </div>
+      <p className="dmk-text-muted dmk-text-caption2">Use at your own risk.</p>
     </Stack>
   );
 }
@@ -175,7 +189,7 @@ function VehicleCard({
   );
 }
 
-function LinkVehicleButton() {
+function LinkVehicleButton({ children }: { children: ReactNode }) {
   const mutation = useMutation(async () => {
     const response = await fetch<{ url: string }>('/setup', { method: 'POST' });
     window.location.href = response.jsonData!.url;
@@ -185,9 +199,9 @@ function LinkVehicleButton() {
     <Button
       onClick={() => mutation.mutate({})}
       isPending={mutation.isPending}
-      variant="text"
+      variant="outlined"
     >
-      Link new vehicle
+      {children}
     </Button>
   );
 }

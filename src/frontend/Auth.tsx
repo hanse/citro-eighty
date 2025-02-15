@@ -2,14 +2,13 @@ import {
   Alert,
   Button,
   Input,
-  Loader,
   requiredProp,
   Stack,
   useMutation,
   useQuery,
 } from '@devmoods/ui';
 import { createContext, use, useRef, type ReactNode } from 'react';
-import { Navigate, useParams, useSearchParams } from 'react-router';
+import { Navigate, useParams } from 'react-router';
 
 import { fetch } from './fetch.js';
 
@@ -27,63 +26,6 @@ export function useSendVerificationEmailMutation(
       }),
     });
   });
-}
-
-export function VerifyEmail() {
-  const [queryParams] = useSearchParams();
-  const tokenParam = queryParams.get('token') ?? '';
-  const [token, email] = atob(tokenParam).split(':');
-
-  const result = useQuery(
-    async (signal) => {
-      return fetch(`/auth/verify-email`, {
-        signal,
-        headers: {
-          'Content-type': 'application/json',
-        },
-        method: 'POST',
-        body: JSON.stringify({ token, email }),
-      });
-    },
-    [token, email],
-  );
-
-  const sendVerificationEmailMutation = useSendVerificationEmailMutation(email);
-
-  if (result.error) {
-    return (
-      <Stack>
-        <Alert intent="error" title="Invalid token">
-          The token is invalid or has expired.
-        </Alert>
-        <Button
-          onClick={sendVerificationEmailMutation.mutate}
-          isPending={sendVerificationEmailMutation.isPending}
-        >
-          Send new verification email
-        </Button>
-      </Stack>
-    );
-  }
-
-  if (result.loading || result.data == null) {
-    return (
-      <div>
-        <Loader />
-      </div>
-    );
-  }
-
-  return (
-    <Stack>
-      <Alert intent="success" title="Account verified!">
-        Your account is now verified.
-      </Alert>
-      <Button as="a" href="/">
-        Login now
-      </Button>
-    </Stack>
-  );
 }
 
 export function MagicLinkLoginForm() {
