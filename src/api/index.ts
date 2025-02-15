@@ -13,6 +13,7 @@ import express from 'express';
 
 import { auth, filterUser } from './auth.js';
 import { cache, postgres, redis } from './config.js';
+import { postSlackMessageJob } from './jobs.js';
 import { enode, getVehicleSettings, saveVehicle } from './services.js';
 
 export const app = express();
@@ -44,6 +45,11 @@ app.post(
     const user = auth.useCurrentUser()!;
     logger.info('setup initiated', { user });
     const link = await enode.users.link(user.id);
+
+    await postSlackMessageJob.delay({
+      message: `User ${user.id} initiated a vehicle setup`,
+    });
+
     return {
       url: link.linkUrl,
     };
@@ -100,6 +106,12 @@ app.put(
 
     await postgres.transaction(async (tx) => {
       await saveVehicle(tx, user.id, vehicleId, payload);
+    });
+
+    await postSlackMessageJob.delay({
+      message: `User ${user.id} updated vehicle ${vehicleId} to ${JSON.stringify(
+        payload,
+      )}`,
     });
 
     return payload;
