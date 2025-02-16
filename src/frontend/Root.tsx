@@ -56,7 +56,9 @@ function AppLayout({ children }: { children: ReactNode }) {
   return (
     <div className="App">
       <header className="App-header">
-        <span className="logo">Citro 80.</span>
+        <span className="logo">
+          Citro 80<span style={{ color: '#99BA09' }}>.</span>
+        </span>
       </header>
       {children}
     </div>
