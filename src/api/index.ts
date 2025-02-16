@@ -9,6 +9,7 @@ import {
 } from '@devmoods/express-extras';
 import { createSsrMiddleware } from '@devmoods/express-extras/vite/ssr';
 import { admin } from '@devmoods/postgres-admin';
+import { type } from 'arktype';
 import express from 'express';
 
 import { auth, filterUser } from './auth.js';
@@ -87,21 +88,19 @@ app.get(
   }),
 );
 
+const chargeInput = type({
+  maxCharge: '0<=number<=100',
+  isActive: 'boolean',
+});
+
 app.put(
   '/api/charges/:vehicleId',
   auth.isAuthorized(),
-  validateBody({
-    type: 'object',
-    properties: {
-      maxCharge: { type: 'number' },
-      isActive: { type: 'boolean' },
-    },
-  }),
-  route(async (req) => {
+  validateBody(chargeInput),
+  route<typeof chargeInput.infer>(async (req) => {
     const user = auth.useCurrentUser()!;
     const vehicleId = req.params.vehicleId;
-    const maxCharge = req.body.maxCharge;
-    const isActive = req.body.isActive;
+    const { maxCharge, isActive } = req.body;
     const payload = { maxCharge, isActive };
 
     await postgres.transaction(async (tx) => {

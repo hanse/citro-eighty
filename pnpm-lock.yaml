@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@devmoods/express-extras':
-        specifier: ^0.52.1
-        version: 0.52.1(@vitejs/plugin-react@4.3.4(vite@6.1.0(@types/node@22.13.4)(tsx@4.19.2)))(arktype@2.0.4)(faktory-worker@4.6.0)(vite@6.1.0(@types/node@22.13.4)(tsx@4.19.2))
+        specifier: ^0.52.2
+        version: 0.52.2(@vitejs/plugin-react@4.3.4(vite@6.1.0(@types/node@22.13.4)(tsx@4.19.2)))(arktype@2.0.4)(faktory-worker@4.6.0)(vite@6.1.0(@types/node@22.13.4)(tsx@4.19.2))
       '@devmoods/fetch':
         specifier: ^4.0.1
         version: 4.0.1
       '@devmoods/postgres-admin':
         specifier: ^0.9.0
-        version: 0.9.0(@devmoods/express-extras@0.52.1(@vitejs/plugin-react@4.3.4(vite@6.1.0(@types/node@22.13.4)(tsx@4.19.2)))(arktype@2.0.4)(faktory-worker@4.6.0)(vite@6.1.0(@types/node@22.13.4)(tsx@4.19.2)))
+        version: 0.9.0(@devmoods/express-extras@0.52.2(@vitejs/plugin-react@4.3.4(vite@6.1.0(@types/node@22.13.4)(tsx@4.19.2)))(arktype@2.0.4)(faktory-worker@4.6.0)(vite@6.1.0(@types/node@22.13.4)(tsx@4.19.2)))
       '@devmoods/ui':
         specifier: ^2.7.6
         version: 2.7.6(react-dom@19.0.0(react@19.0.0))(react-icons@5.4.0(react@19.0.0))(react@19.0.0)
@@ -26,6 +26,9 @@ importers:
       '@types/react-dom':
         specifier: ^19.0.3
         version: 19.0.3(@types/react@19.0.8)
+      arktype:
+        specifier: 2.0.4
+        version: 2.0.4
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
@@ -211,8 +214,8 @@ packages:
   '@devmoods/eslint-config@2.6.0':
     resolution: {integrity: sha512-YGy9QXC3O5YGTn6Adu/ttz1Fh8+wCbMDgmaRSg3Ax1JbU+8u6PJasT41wgRnLfDVvCsMRWS+rWyc/BmGjz5hbw==}
 
-  '@devmoods/express-extras@0.52.1':
-    resolution: {integrity: sha512-7U2Bg4Dz+bTsAgcVqndrht/XonNi/svJ0LX7VRPSkoG1uRWWO16BXmpKh3U1iJob/lq70QKc8XxOtqbgT3SyZg==}
+  '@devmoods/express-extras@0.52.2':
+    resolution: {integrity: sha512-Me8idRM7dphbLHnPRN4hzrI21BdDJvsyK/1HHRy3/dB41u7OSmbXNmCCPzjT7kluwXNDYThn66BK8O8n3OIkTA==}
     engines: {node: '>=20 <24'}
     peerDependencies:
       '@vitejs/plugin-react': '>=4.3.4'
@@ -3327,7 +3330,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@devmoods/express-extras@0.52.1(@vitejs/plugin-react@4.3.4(vite@6.1.0(@types/node@22.13.4)(tsx@4.19.2)))(arktype@2.0.4)(faktory-worker@4.6.0)(vite@6.1.0(@types/node@22.13.4)(tsx@4.19.2))':
+  '@devmoods/express-extras@0.52.2(@vitejs/plugin-react@4.3.4(vite@6.1.0(@types/node@22.13.4)(tsx@4.19.2)))(arktype@2.0.4)(faktory-worker@4.6.0)(vite@6.1.0(@types/node@22.13.4)(tsx@4.19.2))':
     dependencies:
       '@devmoods/fetch': 4.0.1
       '@sentry/node': 8.55.0
@@ -3368,9 +3371,9 @@ snapshots:
 
   '@devmoods/fetch@4.0.1': {}
 
-  '@devmoods/postgres-admin@0.9.0(@devmoods/express-extras@0.52.1(@vitejs/plugin-react@4.3.4(vite@6.1.0(@types/node@22.13.4)(tsx@4.19.2)))(arktype@2.0.4)(faktory-worker@4.6.0)(vite@6.1.0(@types/node@22.13.4)(tsx@4.19.2)))':
+  '@devmoods/postgres-admin@0.9.0(@devmoods/express-extras@0.52.2(@vitejs/plugin-react@4.3.4(vite@6.1.0(@types/node@22.13.4)(tsx@4.19.2)))(arktype@2.0.4)(faktory-worker@4.6.0)(vite@6.1.0(@types/node@22.13.4)(tsx@4.19.2)))':
     dependencies:
-      '@devmoods/express-extras': 0.52.1(@vitejs/plugin-react@4.3.4(vite@6.1.0(@types/node@22.13.4)(tsx@4.19.2)))(arktype@2.0.4)(faktory-worker@4.6.0)(vite@6.1.0(@types/node@22.13.4)(tsx@4.19.2))
+      '@devmoods/express-extras': 0.52.2(@vitejs/plugin-react@4.3.4(vite@6.1.0(@types/node@22.13.4)(tsx@4.19.2)))(arktype@2.0.4)(faktory-worker@4.6.0)(vite@6.1.0(@types/node@22.13.4)(tsx@4.19.2))
       date-fns: 4.1.0
       pg-structure: 7.15.3
     transitivePeerDependencies:

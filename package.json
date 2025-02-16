@@ -14,12 +14,13 @@
     "test": "NODE_ENV=test DOTENV_CONFIG_PATH=.env.test vitest"
   },
   "dependencies": {
-    "@devmoods/express-extras": "^0.52.1",
+    "@devmoods/express-extras": "^0.52.2",
     "@devmoods/fetch": "^4.0.1",
     "@devmoods/postgres-admin": "^0.9.0",
     "@devmoods/ui": "^2.7.6",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
+    "arktype": "2.0.4",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "react": "^19.0.0",

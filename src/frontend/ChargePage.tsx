@@ -9,6 +9,7 @@ import {
   useMutation,
   useQuery,
   useSliderState,
+  useToast,
 } from '@devmoods/ui';
 import { type ReactNode } from 'react';
 
@@ -107,7 +108,13 @@ function VehicleCard({
   onSubmit: () => void;
 }) {
   const updateChargingMutation = useMutation(
-    ({ maxCharge, isActive }: { maxCharge: number; isActive: boolean }) => {
+    async ({
+      maxCharge,
+      isActive,
+    }: {
+      maxCharge: number;
+      isActive: boolean;
+    }) => {
       return fetch(`/charges/${vehicle.id}`, {
         method: 'PUT',
         body: JSON.stringify({
@@ -118,16 +125,33 @@ function VehicleCard({
     },
   );
 
+  const toast = useToast();
+
   const maxCharge = useSliderState(vehicle.desiredMaxCharge);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await updateChargingMutation.mutate({
-      maxCharge: maxCharge.value,
-      isActive: true,
-    });
 
-    onSubmit();
+    try {
+      await updateChargingMutation.mutate({
+        maxCharge: maxCharge.value,
+        isActive: true,
+      });
+
+      onSubmit();
+
+      toast({
+        title: 'Max charge updated',
+        description: `The vehicle will stop charging at ${maxCharge.value}%`,
+        duration: 2000,
+      });
+    } catch {
+      toast({
+        title: 'Failed to set max charge',
+        description: 'An error occured',
+        intent: 'error',
+      });
+    }
   };
 
   const handleCancel = async () => {

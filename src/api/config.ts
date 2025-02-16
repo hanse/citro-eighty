@@ -19,7 +19,7 @@ export const config = extendConfig({
 });
 
 export const postgres = createPostgres();
-export const redis = createRedis();
+export const redis: ReturnType<typeof createRedis> = createRedis();
 export const email = createEmail();
 export const cache = createCache(createRedisCacheAdapter(redis));
 export const jobs = createJobs({ queueName: 'citro80' });
