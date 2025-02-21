@@ -15,11 +15,11 @@ importers:
         specifier: ^4.0.1
         version: 4.0.1
       '@devmoods/postgres-admin':
-        specifier: ^0.9.0
-        version: 0.9.0(@devmoods/express-extras@0.52.3(@vitejs/plugin-react@4.3.4(vite@6.1.1(@types/node@22.13.4)(tsx@4.19.3)))(arktype@2.0.4)(faktory-worker@4.6.0)(vite@6.1.1(@types/node@22.13.4)(tsx@4.19.3)))
+        specifier: ^0.10.0
+        version: 0.10.0(@devmoods/express-extras@0.52.3(@vitejs/plugin-react@4.3.4(vite@6.1.1(@types/node@22.13.4)(tsx@4.19.3)))(arktype@2.0.4)(faktory-worker@4.6.0)(vite@6.1.1(@types/node@22.13.4)(tsx@4.19.3)))
       '@devmoods/ui':
-        specifier: ^2.7.6
-        version: 2.7.6(react-dom@19.0.0(react@19.0.0))(react-icons@5.4.0(react@19.0.0))(react@19.0.0)
+        specifier: ^2.9.0
+        version: 2.9.0(react-dom@19.0.0(react@19.0.0))(react-icons@5.4.0(react@19.0.0))(react@19.0.0)
       '@types/react':
         specifier: ^19.0.10
         version: 19.0.10
@@ -227,13 +227,13 @@ packages:
     resolution: {integrity: sha512-V7mMuKUqf0rklftsYKvQWIiko1uLiAxKP6iuZW24WtyCVvSHWm9c+b2VROpY/Giz/BbALsi3FpkQpmIvTGkHXA==}
     engines: {node: '>=18.0.0'}
 
-  '@devmoods/postgres-admin@0.9.0':
-    resolution: {integrity: sha512-wPsUZQYWe1nrRSEh+1EnLANxVnQy8HQwQDWy6XxsSN1WtMoWpryaGcRrpQ5kWkRtruXUmxXR9PxyeOAQPPBDZQ==}
+  '@devmoods/postgres-admin@0.10.0':
+    resolution: {integrity: sha512-jwPmVie5zxS+Dj0fSjX/YxuyO36imiDogG2Ohuhlkks/7z+SN6wV/TY8v+zsDCLLd4hKg6Xm+F9MHMcagd2Lgg==}
     peerDependencies:
       '@devmoods/express-extras': '>=0.46.0'
 
-  '@devmoods/ui@2.7.6':
-    resolution: {integrity: sha512-v/MRU6OBj84xSgr39cBYp4AHDi8Bqljaihvi9BFJBoV//dpilzTycDagGst2DUuGBMpCZWgrlDo1kDEM3ADVow==}
+  '@devmoods/ui@2.9.0':
+    resolution: {integrity: sha512-eOzlm1P1OXRkS0FWaPXxcwPL3kqKvV1aeI7uTbOPv5qiQJgwCc20agJpG6iaDh3D1YYp9eVmsZ0IEWoOiimkXg==}
     peerDependencies:
       react: '>=18.2'
       react-dom: '>=18.2'
@@ -557,6 +557,10 @@ packages:
     resolution: {integrity: sha512-DWUB2pksgNEb6Bz2fggIy1wh6fGgZP4Xyy/Mt0QZPiloKKXerbqq9D3SBQTlCRYOrcRPu4vuz+CGjwdfqxnoWA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
+  '@eslint/core@0.12.0':
+    resolution: {integrity: sha512-cmrR6pytBuSMTaBweKoGMwu3EiHiEC+DoyupPmlZ0HxBJBtIxwe+j/E4XPIKNx+Q74c8lXKPwYawBf5glsTkHg==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
   '@eslint/eslintrc@3.2.0':
     resolution: {integrity: sha512-grOjVNN8P3hjJn/eIETF1wwd12DdnwFDoyceUJLYYdkpbwq3nLi+4fqrTAONx7XDALqlL220wC/RHSC/QTI/0w==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -569,8 +573,8 @@ packages:
     resolution: {integrity: sha512-RBMg5FRL0I0gs51M/guSAj5/e14VQ4tpZnQNWwuDT66P14I43ItmPfIZRhO9fUVIPOAQXU47atlywZ/czoqFPA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@eslint/plugin-kit@0.2.6':
-    resolution: {integrity: sha512-+0TjwR1eAUdZtvv/ir1mGX+v0tUoR3VEPB8Up0LLJC+whRW0GgBBtpbOkg/a/U4Dxa6l5a3l9AJ1aWIQVyoWJA==}
+  '@eslint/plugin-kit@0.2.7':
+    resolution: {integrity: sha512-JubJ5B2pJ4k4yGxaNLdbjrnk9d/iDz6/q8wOilpIowd6PJPgaxCuHBnBszq7Ce2TyMrywm5r4PnKm6V3iiZF+g==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@floating-ui/core@1.6.9':
@@ -2357,8 +2361,8 @@ packages:
   node-addon-api@5.1.0:
     resolution: {integrity: sha512-eh0GgfEkpnoWDq+VY8OyvYhFEzBk6jIYbRKdIlyTiAXIVJ8PyBaKb0rp7oDtoddbdoHWhq8wwr+XZ81F1rpNdA==}
 
-  node-addon-api@8.3.0:
-    resolution: {integrity: sha512-8VOpLHFrOQlAH+qA0ZzuGRlALRA6/LVh8QJldbrC4DY0hXoMP0l4Acq8TzFC018HztWiRqyCEj2aTWY2UvnJUg==}
+  node-addon-api@8.3.1:
+    resolution: {integrity: sha512-lytcDEdxKjGJPTLEfW4mYMigRezMlyJY8W4wxJK8zE533Jlb8L8dRuObJFWg2P+AuOIxoCgKF+2Oq4d4Zd0OUA==}
     engines: {node: ^18 || ^20 || >= 21}
 
   node-fetch@2.7.0:
@@ -3369,7 +3373,7 @@ snapshots:
 
   '@devmoods/fetch@4.0.1': {}
 
-  '@devmoods/postgres-admin@0.9.0(@devmoods/express-extras@0.52.3(@vitejs/plugin-react@4.3.4(vite@6.1.1(@types/node@22.13.4)(tsx@4.19.3)))(arktype@2.0.4)(faktory-worker@4.6.0)(vite@6.1.1(@types/node@22.13.4)(tsx@4.19.3)))':
+  '@devmoods/postgres-admin@0.10.0(@devmoods/express-extras@0.52.3(@vitejs/plugin-react@4.3.4(vite@6.1.1(@types/node@22.13.4)(tsx@4.19.3)))(arktype@2.0.4)(faktory-worker@4.6.0)(vite@6.1.1(@types/node@22.13.4)(tsx@4.19.3)))':
     dependencies:
       '@devmoods/express-extras': 0.52.3(@vitejs/plugin-react@4.3.4(vite@6.1.1(@types/node@22.13.4)(tsx@4.19.3)))(arktype@2.0.4)(faktory-worker@4.6.0)(vite@6.1.1(@types/node@22.13.4)(tsx@4.19.3))
       date-fns: 4.1.0
@@ -3377,7 +3381,7 @@ snapshots:
     transitivePeerDependencies:
       - pg-native
 
-  '@devmoods/ui@2.7.6(react-dom@19.0.0(react@19.0.0))(react-icons@5.4.0(react@19.0.0))(react@19.0.0)':
+  '@devmoods/ui@2.9.0(react-dom@19.0.0(react@19.0.0))(react-icons@5.4.0(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@ariakit/react': 0.4.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@devmoods/fetch': 4.0.1
@@ -3560,6 +3564,10 @@ snapshots:
     dependencies:
       '@types/json-schema': 7.0.15
 
+  '@eslint/core@0.12.0':
+    dependencies:
+      '@types/json-schema': 7.0.15
+
   '@eslint/eslintrc@3.2.0':
     dependencies:
       ajv: 6.12.6
@@ -3578,9 +3586,9 @@ snapshots:
 
   '@eslint/object-schema@2.1.6': {}
 
-  '@eslint/plugin-kit@0.2.6':
+  '@eslint/plugin-kit@0.2.7':
     dependencies:
-      '@eslint/core': 0.11.0
+      '@eslint/core': 0.12.0
       levn: 0.4.1
 
   '@floating-ui/core@1.6.9':
@@ -4384,7 +4392,7 @@ snapshots:
   argon2@0.41.1:
     dependencies:
       '@phc/format': 1.0.0
-      node-addon-api: 8.3.0
+      node-addon-api: 8.3.1
       node-gyp-build: 4.8.4
 
   argparse@2.0.1: {}
@@ -5030,7 +5038,7 @@ snapshots:
       '@eslint/core': 0.11.0
       '@eslint/eslintrc': 3.2.0
       '@eslint/js': 9.20.0
-      '@eslint/plugin-kit': 0.2.6
+      '@eslint/plugin-kit': 0.2.7
       '@humanfs/node': 0.16.6
       '@humanwhocodes/module-importer': 1.0.1
       '@humanwhocodes/retry': 0.4.2
@@ -5702,7 +5710,7 @@ snapshots:
 
   node-addon-api@5.1.0: {}
 
-  node-addon-api@8.3.0: {}
+  node-addon-api@8.3.1: {}
 
   node-fetch@2.7.0:
     dependencies:
