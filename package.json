@@ -14,13 +14,13 @@
     "test": "NODE_ENV=test DOTENV_CONFIG_PATH=.env.test vitest"
   },
   "dependencies": {
-    "@devmoods/express-extras": "^0.52.3",
+    "@devmoods/express-extras": "^0.53.0",
     "@devmoods/fetch": "^4.0.1",
     "@devmoods/postgres-admin": "^0.10.0",
     "@devmoods/ui": "^2.9.0",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
-    "arktype": "2.0.4",
+    "arktype": "2.1.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "react": "^19.0.0",
@@ -30,9 +30,9 @@
   },
   "devDependencies": {
     "@devmoods/eslint-config": "^2.6.0",
-    "@types/node": "^22.13.4",
-    "eslint": "^9.20.1",
-    "prettier": "^3.5.1",
+    "@types/node": "^22.13.5",
+    "eslint": "^9.21.0",
+    "prettier": "^3.5.2",
     "tsx": "^4.19.3",
     "typescript": "^5.7.3",
     "vite": "^6.1.1"
