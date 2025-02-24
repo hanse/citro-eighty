@@ -2,13 +2,14 @@ import {
   Alert,
   Button,
   Input,
+  NumberInput,
   requiredProp,
   Stack,
   useMutation,
   useQuery,
 } from '@devmoods/ui';
 import { createContext, use, useRef, type ReactNode } from 'react';
-import { Navigate, useParams } from 'react-router';
+import { Navigate, useNavigate, useParams } from 'react-router';
 
 import { fetch } from './fetch.js';
 
@@ -29,15 +30,18 @@ export function useSendVerificationEmailMutation(
 }
 
 export function MagicLinkLoginForm() {
+  const navigate = useNavigate();
   const emailRef = useRef<HTMLInputElement>(null);
 
-  const mutation = useMutation(({ email }: { email: string }) => {
-    return fetch('/auth/passwordless/request-token', {
+  const mutation = useMutation(async ({ email }: { email: string }) => {
+    await fetch('/auth/passwordless/request-token', {
       method: 'POST',
       body: JSON.stringify({
         email,
       }),
     });
+
+    navigate('/otp');
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -48,16 +52,7 @@ export function MagicLinkLoginForm() {
   };
 
   return (
-    <Stack as="form" onSubmit={handleSubmit} className="dmk-margin-top-m">
-      {mutation.resolvedCount > 0 && (
-        <Alert
-          intent="success"
-          title="Check your email"
-          onClose={mutation.reset}
-        >
-          We've sent a link to your email.
-        </Alert>
-      )}
+    <Stack as="form" onSubmit={handleSubmit}>
       {mutation.error && (
         <Alert intent="error" title="Not valid" onClose={mutation.reset} />
       )}
@@ -121,9 +116,13 @@ export function VerifyMagicLink() {
 
   const result = useQuery(
     async (signal) => {
-      await fetch(`/auth/passwordless/login/${token}`, {
+      await fetch(`/auth/passwordless/login`, {
         method: 'POST',
         signal,
+        body: JSON.stringify({
+          type: 'token',
+          token,
+        }),
       });
 
       window.location.href = '/';
@@ -136,4 +135,39 @@ export function VerifyMagicLink() {
   }
 
   return null;
+}
+
+export function MagicLinkOtp() {
+  const mutation = useMutation(({ otp }: { otp: string }) => {
+    return fetch(`/auth/passwordless/login`, {
+      method: 'POST',
+      body: JSON.stringify({
+        type: 'otp',
+        otp,
+      }),
+    });
+  });
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const otp = formData.get('otp') as string;
+    await mutation.mutate({ otp });
+
+    window.location.href = '/';
+  };
+
+  return (
+    <Stack as="form" onSubmit={handleSubmit}>
+      {mutation.error && (
+        <Alert intent="error" title="Invalid OTP" onClose={mutation.reset} />
+      )}
+      <NumberInput
+        name="otp"
+        label="OTP"
+        hint="Enter the 6-digit code sent to your email"
+      />
+      <Button type="submit">Verify</Button>
+    </Stack>
+  );
 }

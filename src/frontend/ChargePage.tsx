@@ -42,7 +42,10 @@ export function ChargePage() {
           The vehicle connection is handled by{' '}
           <a href="https://enode.com">Enode</a>.
         </p>
-        <MagicLinkLoginForm />
+
+        <div className="dmk-margin-top-m">
+          <MagicLinkLoginForm />
+        </div>
       </div>
     );
   }

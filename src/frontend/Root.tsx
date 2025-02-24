@@ -15,7 +15,7 @@ import { type ReactNode, StrictMode } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Outlet, useRouteError, type RouteObject } from 'react-router';
 
-import { SignedOut, VerifyMagicLink } from './Auth.jsx';
+import { MagicLinkOtp, SignedOut, VerifyMagicLink } from './Auth.jsx';
 import { ChargePage } from './ChargePage.jsx';
 
 const theme = createTheme({
@@ -82,7 +82,7 @@ function ChargeRoot() {
   return (
     <AppLayout>
       <Helmet title="Home" />
-      <ChargePage />
+      <Outlet />
     </AppLayout>
   );
 }
@@ -92,6 +92,10 @@ export const routes: RouteObject[] = [
     path: '/',
     element: <ChargeRoot />,
     errorElement: <ErrorElement />,
+    children: [
+      { path: 'otp', element: <MagicLinkOtp /> },
+      { index: true, element: <ChargePage /> },
+    ],
   },
   {
     path: '/auth',

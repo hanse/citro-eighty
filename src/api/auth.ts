@@ -59,22 +59,34 @@ export const auth = createAuth({
           }
         });
       },
-      onLoginRequest: async (user, temporaryToken) => {
+      onLoginRequest: async (user, temporaryToken, otp) => {
         await sendEmailJob.delay({
           to: user.email,
           subject: 'Your login to Citro 80.',
-          message: passwordlessLoginTemplate(user, temporaryToken),
+          message: passwordlessLoginTemplate(user, temporaryToken, otp),
         });
       },
     }),
   ],
 });
 
-function passwordlessLoginTemplate(user: User, temporaryToken: string) {
+function passwordlessLoginTemplate(
+  user: User,
+  temporaryToken: string,
+  otp: string,
+) {
   return `
 Hi!
 
-Use this link to login to Citro 80:
+Your OTP for Citro 80 is:
+
+${otp}
+
+The code is valid for 5 minutes.
+
+---
+
+On the web, you can also use this link:
 
 ${config.value.PUBLIC_URL}/auth/magic-link/${temporaryToken}
 
