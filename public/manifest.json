@@ -1,0 +1,27 @@
+{
+  "name": "Citro 80",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "short_name": "Citro 80",
+  "id": "no.devmoods.citroeighty",
+  "icons": [
+    {
+      "src": "/app-icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/app-icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/?source=pwa",
+  "display": "standalone",
+  "scope": "/",
+  "description": "Stop your Citroën EV charger at 80%",
+  "lang": "en",
+  "dir": "ltr",
+  "prefer_related_applications": true,
+  "handle_links": "preferred"
+}
