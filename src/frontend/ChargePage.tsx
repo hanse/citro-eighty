@@ -31,21 +31,22 @@ export function ChargePage() {
   if (!currentUser) {
     return (
       <div>
-        <p className="dmk-text-title2 dmk-text-semibold">
-          Stop your Citroën EV charger at 80% 🔋
+        <p className="dmk-text-title1 dmk-text-semibold">
+          Stop charging at 80% 🔋
         </p>
         <p className="dmk-margin-top-l">
-          Sign up to connect your Citroën EV. Follow the link in the email to
-          continue with the setup.
-        </p>
-        <p className="dmk-margin-top-m dmk-text-muted">
-          The vehicle connection is handled by{' '}
-          <a href="https://enode.com">Enode</a>.
+          Sign up now to connect your Citroën EV and automatically stop charging
+          when you've had enough.
         </p>
 
         <div className="dmk-margin-top-m">
           <MagicLinkLoginForm />
         </div>
+
+        <p className="dmk-margin-top-m dmk-text-muted">
+          The vehicle connection is handled by{' '}
+          <a href="https://enode.com">Enode</a> and is very safe.
+        </p>
       </div>
     );
   }

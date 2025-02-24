@@ -13,10 +13,11 @@ import {
 } from '@devmoods/ui';
 import { type ReactNode, StrictMode } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { Outlet, useRouteError, type RouteObject } from 'react-router';
+import { NavLink, Outlet, useRouteError, type RouteObject } from 'react-router';
 
 import { MagicLinkOtp, SignedOut, VerifyMagicLink } from './Auth.jsx';
 import { ChargePage } from './ChargePage.jsx';
+import { FaqPage } from './FaqPage.jsx';
 
 const theme = createTheme({
   fonts: {
@@ -56,9 +57,11 @@ function AppLayout({ children }: { children: ReactNode }) {
   return (
     <div className="App">
       <header className="App-header">
-        <span className="logo">
+        <NavLink to="/" className="logo">
           Citro 80<span style={{ color: '#99BA09' }}>.</span>
-        </span>
+        </NavLink>
+
+        <NavLink to="/faq">FAQ</NavLink>
       </header>
       {children}
     </div>
@@ -93,6 +96,7 @@ export const routes: RouteObject[] = [
     element: <ChargeRoot />,
     errorElement: <ErrorElement />,
     children: [
+      { path: 'faq', element: <FaqPage /> },
       { path: 'otp', element: <MagicLinkOtp /> },
       { index: true, element: <ChargePage /> },
     ],

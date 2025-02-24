@@ -19,10 +19,15 @@ body {
   height: 80px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .logo {
   font-size: 18px;
   font-weight: 700;
   color: #082f49;
+
+  &:hover {
+    text-decoration: none;
+  }
 }
