@@ -6,7 +6,6 @@ import {
   PasswordlessAuthProvider,
   RedisTokenStorage,
   sql,
-  type Transaction,
 } from '@devmoods/express-extras';
 import { snakeToCamelCase } from '@devmoods/fetch';
 
@@ -16,15 +15,15 @@ import { sendEmailJob } from './jobs.js';
 const sha256 = (input: string) =>
   crypto.createHash('sha256').update(input).digest('hex');
 
-type User = Awaited<ReturnType<typeof getUser>>;
+type User = Awaited<ReturnType<typeof getUserById>>;
 
 export const filterUser = (u: User) => ({
   id: u.id,
   email: u.email,
 });
 
-async function getUser(tx: Transaction, id: string) {
-  const user = await tx.get<{
+async function getUserById(id: string) {
+  const user = await postgres.get<{
     id: string;
     email: string;
     is_superuser: boolean;
@@ -35,25 +34,21 @@ async function getUser(tx: Transaction, id: string) {
 
 export const auth = createAuth({
   tokenStorage: new RedisTokenStorage(redis),
-  getUserById: async (id) => {
-    return await postgres.withConnection(async (tx) => {
-      return await getUser(tx, id);
-    });
-  },
+  getUserById,
   filterUser,
   providers: [
     PasswordlessAuthProvider({
       getUserByEmail: async (email) => {
-        return postgres.transaction(async (tx) => {
+        return postgres.transaction(async () => {
           const userId = sha256(email);
           try {
-            return await getUser(tx, userId);
+            return await getUserById(userId);
           } catch (error) {
             if (error instanceof DoesNotExistError) {
-              await tx.insert(
+              await postgres.insert(
                 sql`INSERT INTO users ${sql.spreadInsert({ id: userId, email })}`,
               );
-              return await getUser(tx, userId);
+              return await getUserById(userId);
             }
             throw error;
           }

@@ -1,8 +1,8 @@
 import 'dotenv/config';
 
-import { getLogger, sql, type Transaction } from '@devmoods/express-extras';
+import { getLogger, sql } from '@devmoods/express-extras';
 
-import { config } from './config.js';
+import { config, postgres } from './config.js';
 import { Enode } from './enode.js';
 
 const logger = getLogger();
@@ -40,17 +40,14 @@ export async function killChargingAboveBatteryLevel(
   return false;
 }
 
-export async function getVehicleSettings(
-  tx: Transaction,
-  vehicleIds?: string[],
-) {
+export async function getVehicleSettings(vehicleIds?: string[]) {
   const query = sql`SELECT external_id, max_charge, is_active FROM vehicles`;
 
   if (vehicleIds != null) {
     query.append(sql` WHERE external_id = ANY(${vehicleIds})`);
   }
 
-  const vehicles = await tx.all<{
+  const vehicles = await postgres.all<{
     external_id: string;
     max_charge: number;
     is_active: boolean;
@@ -70,12 +67,11 @@ interface VehicleSettings {
 }
 
 export async function saveVehicle(
-  tx: Transaction,
   userId: string,
   vehicleId: string,
   settings: Partial<VehicleSettings>,
 ) {
-  await tx.query(
+  await postgres.query(
     sql`SELECT * FROM vehicles WHERE external_id = ${vehicleId} FOR UPDATE`,
   );
 
@@ -86,7 +82,7 @@ export async function saveVehicle(
     updated_at: new Date(),
   };
 
-  await tx.query(sql`
+  await postgres.query(sql`
     INSERT INTO vehicles ${sql.spreadInsert({
       external_id: vehicleId,
       ...updates,
@@ -96,8 +92,8 @@ export async function saveVehicle(
   `);
 }
 
-export async function deactivateVehicle(tx: Transaction, vehicleId: string) {
-  await tx.query(sql`
+export async function deactivateVehicle(vehicleId: string) {
+  await postgres.query(sql`
     UPDATE vehicles
     SET is_active = FALSE, updated_at = ${new Date()}
     WHERE external_id = ${vehicleId}

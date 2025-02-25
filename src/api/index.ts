@@ -68,12 +68,9 @@ app.get(
   route(async () => {
     const user = auth.useCurrentUser()!;
     const linkedVehicles = await getEnodeVehicles(user.id);
-    const settingsByVehicleId = await postgres.withConnection(async (tx) => {
-      return getVehicleSettings(
-        tx,
-        linkedVehicles.data.map((v) => v.id),
-      );
-    });
+    const settingsByVehicleId = await getVehicleSettings(
+      linkedVehicles.data.map((v) => v.id),
+    );
 
     return linkedVehicles.data.map((v) => ({
       id: v.id,
@@ -103,8 +100,8 @@ app.put(
     const { maxCharge, isActive } = req.body;
     const payload = { maxCharge, isActive };
 
-    await postgres.transaction(async (tx) => {
-      await saveVehicle(tx, user.id, vehicleId, payload);
+    await postgres.transaction(async () => {
+      await saveVehicle(user.id, vehicleId, payload);
     });
 
     await postSlackMessageJob.delay({

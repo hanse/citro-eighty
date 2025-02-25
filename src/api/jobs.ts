@@ -46,8 +46,8 @@ export const killChargingJob = jobs.job(async function killCharging({
 
   if (isKilled) {
     logger.info(`Killed charging for vehicle ${vehicleId}`);
-    await postgres.transaction(async (tx) => {
-      await deactivateVehicle(tx, vehicleId);
+    await postgres.transaction(async () => {
+      await deactivateVehicle(vehicleId);
     });
   } else {
     logger.info('Not finished charging yet', { vehicleId });
