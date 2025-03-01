@@ -7,6 +7,7 @@ import {
 import { email, jobs, postgres, slack } from './config.js';
 import {
   deactivateVehicle,
+  getEnodeVehicles,
   killChargingAboveBatteryLevel,
 } from './services.js';
 
@@ -35,8 +36,8 @@ interface KillChargingJobOptions {
 export const killChargingJob = jobs.job(async function killCharging({
   vehicleId,
 }: KillChargingJobOptions) {
-  const vehicle = await postgres.get<{ max_charge: number }>(
-    sql`SELECT max_charge FROM vehicles WHERE external_id = ${vehicleId}`,
+  const vehicle = await postgres.get<{ max_charge: number; user_id: string }>(
+    sql`SELECT max_charge, user_id FROM vehicles WHERE external_id = ${vehicleId}`,
   );
 
   const isKilled = await killChargingAboveBatteryLevel(
@@ -49,6 +50,7 @@ export const killChargingJob = jobs.job(async function killCharging({
     await postgres.transaction(async () => {
       await deactivateVehicle(vehicleId);
     });
+    await getEnodeVehicles.clear(vehicle.user_id);
   } else {
     logger.info('Not finished charging yet', { vehicleId });
   }

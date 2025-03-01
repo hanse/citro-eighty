@@ -188,7 +188,7 @@ class Users {
   }
 }
 
-interface VehicleRecord {
+export interface VehicleRecord {
   id: string;
   userId: string;
   vendor: string;
@@ -214,7 +214,7 @@ interface VehicleRecord {
   location: Record<string, any>;
 }
 
-interface VehicleChargeResponse {
+export interface VehicleChargeResponse {
   id: string;
   userId: string;
   state: string;
@@ -227,7 +227,7 @@ interface VehicleChargeResponse {
   failureReason: string | null;
 }
 
-interface PaginatedResponse<T> {
+export interface PaginatedResponse<T> {
   data: T[];
   pagination: {
     after: string | null;

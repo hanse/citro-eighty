@@ -13,9 +13,14 @@ import { type } from 'arktype';
 import express from 'express';
 
 import { auth, filterUser } from './auth.js';
-import { cache, postgres, redis } from './config.js';
+import { postgres, redis } from './config.js';
 import { postSlackMessageJob } from './jobs.js';
-import { enode, getVehicleSettings, saveVehicle } from './services.js';
+import {
+  enode,
+  getEnodeVehicles,
+  getVehicleSettings,
+  saveVehicle,
+} from './services.js';
 
 export const app = express();
 
@@ -55,11 +60,6 @@ app.post(
       url: link.linkUrl,
     };
   }),
-);
-
-const getEnodeVehicles = cache.decorate(
-  { expiresMs: 60 * 1000 },
-  (userId: string) => enode.vehicles.listByUser(userId),
 );
 
 app.get(

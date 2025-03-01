@@ -2,7 +2,7 @@ import 'dotenv/config';
 
 import { getLogger, sql } from '@devmoods/express-extras';
 
-import { config, postgres } from './config.js';
+import { cache, config, postgres } from './config.js';
 import { Enode } from './enode.js';
 
 const logger = getLogger();
@@ -99,3 +99,8 @@ export async function deactivateVehicle(vehicleId: string) {
     WHERE external_id = ${vehicleId}
   `);
 }
+
+export const getEnodeVehicles = cache.decorate(
+  { expiresMs: 60 * 1000 },
+  (userId: string) => enode.vehicles.listByUser(userId),
+);
