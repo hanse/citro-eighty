@@ -3,9 +3,12 @@ import {
   Badge,
   Button,
   CircularProgress,
+  cx,
   Panel,
   Slider,
+  Spacer,
   Stack,
+  Tooltip,
   useMutation,
   useQuery,
   useSliderState,
@@ -19,10 +22,15 @@ import { fetch } from './fetch.js';
 interface Vehicle {
   id: string;
   name: string;
+  year: number;
+  vin: string;
   batteryLevel: number;
   isCharging: boolean;
   desiredMaxCharge: number;
   isActive: boolean;
+  chargingLastUpdated: string;
+  odometerDistance: number;
+  odometerLastUpdated: string;
 }
 
 export function ChargePage() {
@@ -72,7 +80,7 @@ function VehiclesList() {
   const vehicles = data || [];
 
   return (
-    <Stack>
+    <Stack style={{ height: '100%' }}>
       {vehicles.length === 0 && (
         <>
           <Stack horizontal alignItems="center" justifyContent="space-between">
@@ -89,7 +97,7 @@ function VehiclesList() {
           </Panel>
         </>
       )}
-      <Stack>
+      <Stack style={{ height: '100%' }}>
         {vehicles.map((vehicle) => (
           <VehicleCard key={vehicle.id} vehicle={vehicle} onSubmit={refetch} />
         ))}
@@ -172,12 +180,26 @@ function VehicleCard({
   return (
     <Stack as="form" onSubmit={handleSubmit} spacing="l">
       <Stack horizontal alignItems="center" justifyContent="space-between">
-        <h2 className="dmk-text-title1 dmk-text-600">
-          {vehicle.name}{' '}
-          {vehicle.isCharging ? '🔋' : <Badge>Not charging</Badge>}{' '}
-          <span className="dmk-text-muted">{vehicle.batteryLevel}%</span>
-        </h2>
         <div>
+          <h2 className="dmk-text-title1 dmk-text-600">
+            {vehicle.name}
+            <br />
+            {vehicle.isCharging ? (
+              <Badge intent="success">🔋 Charging</Badge>
+            ) : (
+              <Badge>Not charging</Badge>
+            )}
+          </h2>
+          <Tooltip
+            title={`Odometer last updated ${vehicle.odometerLastUpdated}.`}
+          >
+            <span className="dmk-text-muted dmk-text-footnote">
+              {vehicle.year} &middot; {vehicle.odometerDistance} km &middot;{' '}
+              {new Date(vehicle.chargingLastUpdated).toLocaleTimeString()}
+            </span>
+          </Tooltip>
+        </div>
+        <div className={cx(vehicle.isCharging && 'dmk-animate-pulse')}>
           <CircularProgress
             value={vehicle.batteryLevel}
             color={
@@ -187,25 +209,31 @@ function VehicleCard({
             }
             thickness={6}
             size={72}
-          />
+          >
+            <span style={{ fontSize: 20, fontWeight: 600 }}>
+              {vehicle.batteryLevel}%
+            </span>
+          </CircularProgress>
         </div>
       </Stack>
+      <Spacer height={24} />
       {disabled && (
         <Alert title="Not charging" intent="warning">
-          Plug in and start charging to enable the killer
+          Plug in and start charging to set a max limit.
         </Alert>
       )}
-      <Stack horizontal>
-        <Slider min={0} max={100} {...maxCharge} disabled={disabled} />
-        <strong className="dmk-text-title2">{maxCharge.value}%</strong>
-      </Stack>
+
       <Stack>
-        <Button type="submit" disabled={disabled}>
+        <Stack horizontal>
+          <Slider min={0} max={100} {...maxCharge} disabled={disabled} />
+          <strong className="dmk-text-title2">{maxCharge.value}%</strong>
+        </Stack>
+        <Button type="submit" disabled={disabled} className="dmk-margin-top-l">
           {!vehicle.isCharging
             ? 'Not charging'
             : vehicle.isActive
               ? 'Update max charge'
-              : 'Start charge killer'}
+              : 'Set max charge'}
         </Button>
         {vehicle.isActive && (
           <Button variant="outlined" intent="danger" onClick={handleCancel}>

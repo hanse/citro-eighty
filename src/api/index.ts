@@ -14,6 +14,7 @@ import express from 'express';
 
 import { auth, filterUser } from './auth.js';
 import { postgres, redis } from './config.js';
+import { type VehicleRecord } from './enode.js';
 import { postSlackMessageJob } from './jobs.js';
 import {
   enode,
@@ -72,11 +73,23 @@ app.get(
       linkedVehicles.data.map((v) => v.id),
     );
 
+    const displayName = (v: VehicleRecord) => {
+      return (
+        v.information.displayName ||
+        `${v.information.brand} ${v.information.model}`
+      );
+    };
+
     return linkedVehicles.data.map((v) => ({
       id: v.id,
-      name: v.information.displayName,
+      vin: v.information.vin,
+      name: displayName(v),
+      year: v.information.year,
       batteryLevel: v.chargeState.batteryLevel,
       isCharging: v.chargeState.isCharging,
+      chargingLastUpdated: v.chargeState.lastUpdated,
+      odometerDistance: v.odometer.distance,
+      odometerLastUpdated: v.odometer.lastUpdated,
       desiredMaxCharge: Number(
         settingsByVehicleId[v.id]?.['maxCharge'] || '75',
       ),

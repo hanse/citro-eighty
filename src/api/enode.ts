@@ -210,6 +210,10 @@ export interface VehicleRecord {
     lastUpdated: string;
     powerDeliveryState: string;
   };
+  odometer: {
+    distance?: number;
+    lastUpdated?: string;
+  };
   smartChargingPolicy: Record<string, any>;
   location: Record<string, any>;
 }

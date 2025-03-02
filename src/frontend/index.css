@@ -12,7 +12,8 @@ body {
   max-width: 488px;
   padding: 16px;
   margin: 0 auto;
-  padding-top: 32px;
+  min-height: 100vh;
+  height: 100%;
 }
 
 .App-header {
@@ -20,6 +21,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 32px;
 }
 
 .logo {
