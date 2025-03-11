@@ -1,11 +1,10 @@
 import {
   before,
   createExpressServer,
+  createRouter,
   errorHandler,
   getLogger,
   notFound,
-  route,
-  validateBody,
 } from '@devmoods/express-extras';
 import { createSsrMiddleware } from '@devmoods/express-extras/vite/ssr';
 import { admin } from '@devmoods/postgres-admin';
@@ -45,69 +44,62 @@ app.use(
   }),
 );
 
-app.post(
-  '/api/setup',
-  auth.isAuthorized(),
-  route(async () => {
-    const user = auth.useCurrentUser()!;
-    logger.info('setup initiated', { user });
-    const link = await enode.users.link(user.id);
+const api = createRouter();
+app.use('/api', api.getRouter());
 
-    await postSlackMessageJob.delay({
-      message: `User ${user.id} initiated a vehicle setup`,
-    });
+api.post('/setup', {}, auth.isAuthorized(), async () => {
+  const user = auth.useCurrentUser()!;
+  logger.info('setup initiated', { user });
+  const link = await enode.users.link(user.id);
 
-    return {
-      url: link.linkUrl,
-    };
-  }),
-);
+  await postSlackMessageJob.delay({
+    message: `User ${user.id} initiated a vehicle setup`,
+  });
 
-app.get(
-  '/api/vehicles',
-  auth.isAuthorized(),
-  route(async () => {
-    const user = auth.useCurrentUser()!;
-    const linkedVehicles = await getEnodeVehicles(user.id);
-    const settingsByVehicleId = await getVehicleSettings(
-      linkedVehicles.data.map((v) => v.id),
+  return {
+    url: link.linkUrl,
+  };
+});
+
+api.get('/vehicles', {}, auth.isAuthorized(), async () => {
+  const user = auth.useCurrentUser()!;
+  const linkedVehicles = await getEnodeVehicles(user.id);
+  const settingsByVehicleId = await getVehicleSettings(
+    linkedVehicles.data.map((v) => v.id),
+  );
+
+  const displayName = (v: VehicleRecord) => {
+    return (
+      v.information.displayName ||
+      `${v.information.brand} ${v.information.model}`
     );
+  };
 
-    const displayName = (v: VehicleRecord) => {
-      return (
-        v.information.displayName ||
-        `${v.information.brand} ${v.information.model}`
-      );
-    };
-
-    return linkedVehicles.data.map((v) => ({
-      id: v.id,
-      vin: v.information.vin,
-      name: displayName(v),
-      year: v.information.year,
-      batteryLevel: v.chargeState.batteryLevel,
-      isCharging: v.chargeState.isCharging,
-      chargingLastUpdated: v.chargeState.lastUpdated,
-      odometerDistance: v.odometer.distance,
-      odometerLastUpdated: v.odometer.lastUpdated,
-      desiredMaxCharge: Number(
-        settingsByVehicleId[v.id]?.['maxCharge'] || '75',
-      ),
-      isActive: settingsByVehicleId[v.id]?.['isActive'] || false,
-    }));
-  }),
-);
+  return linkedVehicles.data.map((v) => ({
+    id: v.id,
+    vin: v.information.vin,
+    name: displayName(v),
+    year: v.information.year,
+    batteryLevel: v.chargeState.batteryLevel,
+    isCharging: v.chargeState.isCharging,
+    chargingLastUpdated: v.chargeState.lastUpdated,
+    odometerDistance: v.odometer.distance,
+    odometerLastUpdated: v.odometer.lastUpdated,
+    desiredMaxCharge: Number(settingsByVehicleId[v.id]?.['maxCharge'] || '75'),
+    isActive: settingsByVehicleId[v.id]?.['isActive'] || false,
+  }));
+});
 
 const chargeInput = type({
   maxCharge: '0<=number<=100',
   isActive: 'boolean',
 });
 
-app.put(
-  '/api/charges/:vehicleId',
+api.put(
+  '/charges/:vehicleId',
+  { request: chargeInput },
   auth.isAuthorized(),
-  validateBody(chargeInput),
-  route<typeof chargeInput.infer>(async (req) => {
+  async (req) => {
     const user = auth.useCurrentUser()!;
     const vehicleId = req.params.vehicleId;
     const { maxCharge, isActive } = req.body;
@@ -124,7 +116,7 @@ app.put(
     });
 
     return payload;
-  }),
+  },
 );
 
 export async function createServer() {

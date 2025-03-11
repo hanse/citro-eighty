@@ -14,28 +14,29 @@
     "test": "NODE_ENV=test DOTENV_CONFIG_PATH=.env.test vitest"
   },
   "dependencies": {
-    "@devmoods/express-extras": "^0.54.1",
-    "@devmoods/fetch": "^4.0.1",
+    "@devmoods/express-extras": "^0.56.0",
+    "@devmoods/fetch": "^4.1.0",
     "@devmoods/postgres-admin": "^0.10.0",
     "@devmoods/ui": "^2.9.1",
+    "@standard-schema/spec": "^1.0.0",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
-    "arktype": "2.1.1",
+    "arktype": "2.1.9",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-helmet-async": "^2.0.5",
-    "react-router": "^7.2.0"
+    "react-router": "^7.3.0"
   },
   "devDependencies": {
-    "@devmoods/eslint-config": "^2.6.0",
-    "@types/node": "^22.13.8",
-    "eslint": "^9.21.0",
-    "prettier": "^3.5.2",
+    "@devmoods/eslint-config": "^2.7.0",
+    "@types/node": "^22.13.10",
+    "eslint": "^9.22.0",
+    "prettier": "^3.5.3",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
-    "vite": "^6.2.0"
+    "vite": "^6.2.1"
   },
   "prettier": {
     "singleQuote": true
