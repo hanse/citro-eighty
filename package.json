@@ -14,9 +14,9 @@
     "test": "NODE_ENV=test DOTENV_CONFIG_PATH=.env.test vitest"
   },
   "dependencies": {
-    "@devmoods/express-extras": "^0.56.0",
+    "@devmoods/express-extras": "^0.57.1",
     "@devmoods/fetch": "^4.1.0",
-    "@devmoods/postgres-admin": "^0.10.0",
+    "@devmoods/postgres-admin": "^0.11.0",
     "@devmoods/ui": "^2.9.1",
     "@standard-schema/spec": "^1.0.0",
     "@types/react": "^19.0.10",
@@ -36,7 +36,7 @@
     "prettier": "^3.5.3",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2",
-    "vite": "^6.2.1"
+    "vite": "^6.2.2"
   },
   "prettier": {
     "singleQuote": true
