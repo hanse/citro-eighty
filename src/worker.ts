@@ -4,7 +4,7 @@ import {
   useJobId,
 } from '@devmoods/express-extras';
 
-import { jobs } from './api/config.js';
+import { jobs, redis } from './api/config.js';
 import * as appJobs from './api/jobs.js';
 
 setGlobalLoggerContext(() => ({
@@ -16,4 +16,5 @@ const worker = await createFaktoryWorker({
   queueName: jobs.queueName,
 });
 
+await redis.connect();
 await worker.start();
