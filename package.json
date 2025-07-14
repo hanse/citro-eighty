@@ -14,29 +14,29 @@
     "test": "NODE_ENV=test DOTENV_CONFIG_PATH=.env.test vitest"
   },
   "dependencies": {
-    "@devmoods/express-extras": "^0.57.2",
+    "@devmoods/express-extras": "^0.58.0",
     "@devmoods/fetch": "^4.1.0",
-    "@devmoods/postgres-admin": "^0.11.0",
+    "@devmoods/postgres-admin": "^0.12.0",
     "@devmoods/ui": "^2.9.1",
     "@standard-schema/spec": "^1.0.0",
-    "@types/react": "^19.1.0",
-    "@types/react-dom": "^19.1.1",
-    "arktype": "2.1.17",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "arktype": "2.1.20",
+    "dotenv": "^17.2.0",
+    "express": "4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-helmet-async": "^2.0.5",
-    "react-router": "^7.5.0"
+    "react-router": "^7.6.3"
   },
   "devDependencies": {
-    "@devmoods/eslint-config": "^2.7.0",
-    "@types/node": "^22.14.0",
-    "eslint": "^9.24.0",
-    "prettier": "^3.5.3",
-    "tsx": "^4.19.3",
+    "@devmoods/eslint-config": "^2.10.0",
+    "@types/node": "^24.0.13",
+    "eslint": "^9.31.0",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.3",
     "typescript": "^5.8.3",
-    "vite": "^6.2.5"
+    "vite": "^7.0.4"
   },
   "prettier": {
     "singleQuote": true
