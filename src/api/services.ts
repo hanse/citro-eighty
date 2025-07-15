@@ -21,6 +21,11 @@ export async function killChargingAboveBatteryLevel(
   const vehicle = await enode.vehicles.get(vehicleId);
   const chargeState = vehicle.chargeState;
 
+  if (chargeState.isFullyCharged) {
+    logger.info('Vehicle is fully charged', { vehicleId });
+    return true;
+  }
+
   if (!chargeState.isCharging || !chargeState.batteryLevel) {
     return false;
   }
