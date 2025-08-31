@@ -8,24 +8,7 @@ body {
   visibility: visible;
 }
 
-.App {
-  max-width: 488px;
-  padding: 16px;
-  margin: 0 auto;
-  min-height: 100vh;
-  height: 100%;
-}
-
-.App-header {
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 32px;
-}
-
 .logo {
-  font-size: 18px;
   font-weight: 700;
   color: #082f49;
 

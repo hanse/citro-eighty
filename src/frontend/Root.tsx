@@ -6,6 +6,8 @@ import './index.css';
 import {
   ErrorBoundary,
   Panel,
+  ResponsiveMobileAppHeader,
+  ResponsiveMobileAppLayout,
   Stack,
   ThemeProvider,
   ToastProvider,
@@ -24,6 +26,7 @@ const theme = createTheme({
     base: 'DM Sans',
   },
   colors: {
+    base: '#ffffff',
     primary: '#082f49',
     formsBorderRadius: '4px',
   },
@@ -55,16 +58,22 @@ function ErrorElement() {
 
 function AppLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <NavLink to="/" className="logo">
-          Citro 80<span style={{ color: '#99BA09' }}>.</span>
-        </NavLink>
-
-        <NavLink to="/faq">FAQ</NavLink>
-      </header>
+    <ResponsiveMobileAppLayout
+      maxWidth="640px"
+      header={
+        <ResponsiveMobileAppHeader
+          title={
+            <NavLink to="/" className="logo">
+              Citro 80<span style={{ color: '#99BA09' }}>.</span>
+            </NavLink>
+          }
+        >
+          <NavLink to="/faq">FAQ</NavLink>
+        </ResponsiveMobileAppHeader>
+      }
+    >
       {children}
-    </div>
+    </ResponsiveMobileAppLayout>
   );
 }
 
