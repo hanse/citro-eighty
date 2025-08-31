@@ -11,6 +11,7 @@ import { snakeToCamelCase } from '@devmoods/fetch';
 
 import { config, postgres, redis } from './config.js';
 import { sendEmailJob } from './jobs.js';
+import { type DB } from '../types/db.gen.js';
 
 const sha256 = (input: string) =>
   crypto.createHash('sha256').update(input).digest('hex');
@@ -23,11 +24,9 @@ export const filterUser = (u: User) => ({
 });
 
 async function getUserById(id: string) {
-  const user = await postgres.get<{
-    id: string;
-    email: string;
-    is_superuser: boolean;
-  }>(sql`SELECT id, email, is_superuser FROM users WHERE id = ${id}`);
+  const user = await postgres.get<
+    Pick<DB['users'], 'id' | 'email' | 'is_superuser'>
+  >(sql`SELECT id, email, is_superuser FROM users WHERE id = ${id}`);
 
   return snakeToCamelCase(user);
 }

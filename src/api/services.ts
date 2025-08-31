@@ -4,6 +4,7 @@ import { getLogger, sql } from '@devmoods/express-extras';
 
 import { cache, config, postgres } from './config.js';
 import { Enode } from './enode.js';
+import { type DB } from '../types/db.gen.js';
 
 const logger = getLogger();
 
@@ -52,11 +53,10 @@ export async function getVehicleSettings(vehicleIds?: string[]) {
     query.append(sql` WHERE external_id = ANY(${vehicleIds})`);
   }
 
-  const vehicles = await postgres.all<{
-    external_id: string;
-    max_charge: number;
-    is_active: boolean;
-  }>(query);
+  const vehicles =
+    await postgres.all<
+      Pick<DB['vehicles'], 'external_id' | 'max_charge' | 'is_active'>
+    >(query);
 
   return Object.fromEntries(
     vehicles.map((vehicle) => [

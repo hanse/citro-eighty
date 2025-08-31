@@ -11,7 +11,8 @@
     "build:server": "NODE_ENV=production vite build --outDir dist/server --ssr src/entry-server.tsx",
     "lint": "eslint",
     "format": "prettier --write '**/*.{md,js,mjs,ts,mts,tsx,css,scss,html,yml}'",
-    "test": "NODE_ENV=test DOTENV_CONFIG_PATH=.env.test vitest"
+    "test": "NODE_ENV=test DOTENV_CONFIG_PATH=.env.test vitest",
+    "generate-types": "bin/server manage generate-db && pnpm run lint --fix && pnpm run format"
   },
   "dependencies": {
     "@devmoods/express-extras": "^0.61.1",

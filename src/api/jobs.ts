@@ -10,6 +10,7 @@ import {
   getEnodeVehicles,
   killChargingAboveBatteryLevel,
 } from './services.js';
+import { type DB } from '../types/db.gen.js';
 
 const logger = getLogger();
 
@@ -36,7 +37,9 @@ interface KillChargingJobOptions {
 export const killChargingJob = jobs.job(async function killCharging({
   vehicleId,
 }: KillChargingJobOptions) {
-  const vehicle = await postgres.get<{ max_charge: number; user_id: string }>(
+  const vehicle = await postgres.get<
+    Pick<DB['vehicles'], 'max_charge' | 'user_id'>
+  >(
     sql`SELECT max_charge, user_id FROM vehicles WHERE external_id = ${vehicleId}`,
   );
 
