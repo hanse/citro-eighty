@@ -36,8 +36,9 @@ export async function killChargingAboveBatteryLevel(
   }
 
   try {
-    const data = await enode.vehicles.charge(vehicle.id, { action: 'STOP' });
-    logger.info('Stopped charging', data);
+    const action = await enode.vehicles.charge(vehicle.id, { action: 'STOP' });
+    logger.info('Sent STOP action', action);
+
     return true;
   } catch (error: any) {
     logger.error(error);

@@ -142,6 +142,21 @@ class Vehicles {
 
     return response.jsonData!;
   }
+
+  async getAction(actionId: string) {
+    const accessToken = await this.enode.getAccessToken();
+
+    const response = await this.enode.fetch<VehicleActionResponse>(
+      `/vehicles/actions/${actionId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+
+    return response.jsonData!;
+  }
 }
 
 interface UsersLinkResponse {
@@ -237,4 +252,15 @@ export interface PaginatedResponse<T> {
     after: string | null;
     before: string | null;
   };
+}
+
+export interface VehicleActionResponse {
+  id: string;
+  userId: string;
+  vehicleId: string;
+  state: string;
+  completedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+  failureReason: string | null;
 }
