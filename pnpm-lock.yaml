@@ -10,13 +10,13 @@ importers:
     dependencies:
       '@devmoods/express-extras':
         specifier: ^0.61.1
-        version: 0.61.1(@vitejs/plugin-react@4.3.4(vite@7.1.3(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5)))(arktype@2.1.20)(express@4.21.2)(faktory-worker@4.6.0)(typescript@5.9.2)(vite@7.1.3(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5))
+        version: 0.61.1(@vitejs/plugin-react@4.3.4(vite@7.1.4(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5)))(arktype@2.1.20)(express@4.21.2)(faktory-worker@4.6.0)(typescript@5.9.2)(vite@7.1.4(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5))
       '@devmoods/fetch':
         specifier: ^4.2.0
         version: 4.2.0
       '@devmoods/postgres-admin':
         specifier: ^0.12.0
-        version: 0.12.0(@devmoods/express-extras@0.61.1(@vitejs/plugin-react@4.3.4(vite@7.1.3(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5)))(arktype@2.1.20)(express@4.21.2)(faktory-worker@4.6.0)(typescript@5.9.2)(vite@7.1.3(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5)))
+        version: 0.12.0(@devmoods/express-extras@0.61.1(@vitejs/plugin-react@4.3.4(vite@7.1.4(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5)))(arktype@2.1.20)(express@4.21.2)(faktory-worker@4.6.0)(typescript@5.9.2)(vite@7.1.4(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5)))
       '@devmoods/ui':
         specifier: ^2.11.0
         version: 2.11.0(react-dom@19.1.1(react@19.1.1))(react-icons@5.4.0(react@19.1.1))(react@19.1.1)
@@ -70,8 +70,8 @@ importers:
         specifier: ^5.9.2
         version: 5.9.2
       vite:
-        specifier: ^7.1.3
-        version: 7.1.3(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5)
+        specifier: ^7.1.4
+        version: 7.1.4(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5)
 
 packages:
 
@@ -582,16 +582,22 @@ packages:
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
 
+  '@hey-api/codegen-core@0.0.1':
+    resolution: {integrity: sha512-Q7vUF7n2gYSL6Z16XFweIm6O7uh9sBGty05X6T5lYBKTMv1K31P2iSTxyhzW04M2r/s3dAE1bCpW+h9di0Ux7w==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=22.10.0}
+    peerDependencies:
+      typescript: '>=5.5.3'
+
   '@hey-api/json-schema-ref-parser@1.0.7':
     resolution: {integrity: sha512-XYZIDkzp16pf5d5ADLgoT2efuuIzkIGCtGVXNlexzxQaOIgYAwWON+7Tt77ChXMC/2Cq0qe57hSx1x6KwZyWcA==}
     engines: {node: '>= 16'}
 
-  '@hey-api/openapi-ts@0.82.1':
-    resolution: {integrity: sha512-5Amzvt4W9S22xer73SBTT6pvjks4EpgT2B0VUghVvvaqa6r/t1gEQEdmu4MuckM0s2+ocmZISshU/NVfzlbCnA==}
+  '@hey-api/openapi-ts@0.82.3':
+    resolution: {integrity: sha512-wvSrNxYE6FDrM5zRZHoDTcweLPX0dsMmtCwubS+DmPaD+tGXUWI0UajFB0sfIDGG1EWZUR3NH4ym/+cYl7nCoA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=22.10.0}
     hasBin: true
     peerDependencies:
-      typescript: ^5.5.3
+      typescript: '>=5.5.3'
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -3404,8 +3410,8 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  vite@7.1.3:
-    resolution: {integrity: sha512-OOUi5zjkDxYrKhTV3V7iKsoS37VUM7v40+HuwEmcrsf11Cdx9y3DIr2Px6liIcZFwt3XSRpQvFpL3WVy7ApkGw==}
+  vite@7.1.4:
+    resolution: {integrity: sha512-X5QFK4SGynAeeIt+A7ZWnApdUyHYm+pzv/8/A57LqSGcI88U6R6ipOs3uCesdc6yl7nl+zNO0t8LmqAdXcQihw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -4100,10 +4106,10 @@ snapshots:
       - supports-color
       - typescript
 
-  '@devmoods/express-extras@0.61.1(@vitejs/plugin-react@4.3.4(vite@7.1.3(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5)))(arktype@2.1.20)(express@4.21.2)(faktory-worker@4.6.0)(typescript@5.9.2)(vite@7.1.3(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5))':
+  '@devmoods/express-extras@0.61.1(@vitejs/plugin-react@4.3.4(vite@7.1.4(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5)))(arktype@2.1.20)(express@4.21.2)(faktory-worker@4.6.0)(typescript@5.9.2)(vite@7.1.4(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5))':
     dependencies:
       '@devmoods/fetch': 4.2.0
-      '@hey-api/openapi-ts': 0.82.1(typescript@5.9.2)
+      '@hey-api/openapi-ts': 0.82.3(typescript@5.9.2)
       '@sentry/node': 10.8.0
       '@sentry/profiling-node': 10.8.0
       '@standard-schema/spec': 1.0.0
@@ -4116,7 +4122,7 @@ snapshots:
       '@types/qs': 6.14.0
       '@types/superagent': 8.1.9
       '@types/uuid': 10.0.0
-      '@vitejs/plugin-react': 4.3.4(vite@7.1.3(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5))
+      '@vitejs/plugin-react': 4.3.4(vite@7.1.4(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5))
       ajv: 8.17.1
       argon2: 0.44.0
       arktype: 2.1.20
@@ -4138,7 +4144,7 @@ snapshots:
       sonda: 0.9.0
       sql-formatter: 15.6.6
       uuid: 11.1.0
-      vite: 7.1.3(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5)
+      vite: 7.1.4(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5)
     transitivePeerDependencies:
       - aws-crt
       - magicast
@@ -4150,9 +4156,9 @@ snapshots:
     dependencies:
       '@standard-schema/spec': 1.0.0
 
-  '@devmoods/postgres-admin@0.12.0(@devmoods/express-extras@0.61.1(@vitejs/plugin-react@4.3.4(vite@7.1.3(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5)))(arktype@2.1.20)(express@4.21.2)(faktory-worker@4.6.0)(typescript@5.9.2)(vite@7.1.3(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5)))':
+  '@devmoods/postgres-admin@0.12.0(@devmoods/express-extras@0.61.1(@vitejs/plugin-react@4.3.4(vite@7.1.4(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5)))(arktype@2.1.20)(express@4.21.2)(faktory-worker@4.6.0)(typescript@5.9.2)(vite@7.1.4(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5)))':
     dependencies:
-      '@devmoods/express-extras': 0.61.1(@vitejs/plugin-react@4.3.4(vite@7.1.3(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5)))(arktype@2.1.20)(express@4.21.2)(faktory-worker@4.6.0)(typescript@5.9.2)(vite@7.1.3(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5))
+      '@devmoods/express-extras': 0.61.1(@vitejs/plugin-react@4.3.4(vite@7.1.4(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5)))(arktype@2.1.20)(express@4.21.2)(faktory-worker@4.6.0)(typescript@5.9.2)(vite@7.1.4(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5))
       date-fns: 4.1.0
       pg-structure: 7.15.3
     transitivePeerDependencies:
@@ -4323,6 +4329,10 @@ snapshots:
 
   '@floating-ui/utils@0.2.10': {}
 
+  '@hey-api/codegen-core@0.0.1(typescript@5.9.2)':
+    dependencies:
+      typescript: 5.9.2
+
   '@hey-api/json-schema-ref-parser@1.0.7':
     dependencies:
       '@jsdevtools/ono': 7.1.3
@@ -4330,8 +4340,9 @@ snapshots:
       js-yaml: 4.1.0
       lodash: 4.17.21
 
-  '@hey-api/openapi-ts@0.82.1(typescript@5.9.2)':
+  '@hey-api/openapi-ts@0.82.3(typescript@5.9.2)':
     dependencies:
+      '@hey-api/codegen-core': 0.0.1(typescript@5.9.2)
       '@hey-api/json-schema-ref-parser': 1.0.7
       ansi-colors: 4.1.3
       c12: 2.0.1
@@ -5400,14 +5411,14 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.11.1':
     optional: true
 
-  '@vitejs/plugin-react@4.3.4(vite@7.1.3(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5))':
+  '@vitejs/plugin-react@4.3.4(vite@7.1.4(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5))':
     dependencies:
       '@babel/core': 7.28.3
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.28.3)
       '@babel/plugin-transform-react-jsx-source': 7.27.1(@babel/core@7.28.3)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 7.1.3(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5)
+      vite: 7.1.4(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5)
     transitivePeerDependencies:
       - supports-color
 
@@ -7630,7 +7641,7 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vite@7.1.3(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5):
+  vite@7.1.4(@types/node@24.3.0)(jiti@2.5.1)(tsx@4.20.5):
     dependencies:
       esbuild: 0.25.9
       fdir: 6.5.0(picomatch@4.0.3)
