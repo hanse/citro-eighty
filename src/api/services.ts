@@ -3,7 +3,11 @@ import 'dotenv/config';
 import { getLogger, sql } from '@devmoods/express-extras';
 
 import { cache, config, postgres } from './config.js';
-import { Enode } from './enode.js';
+import {
+  Enode,
+  type VehicleActionResponse,
+  type VehicleRecord,
+} from './enode.js';
 import { type DB } from '../types/db.gen.js';
 
 const logger = getLogger();
@@ -15,36 +19,88 @@ export const enode = new Enode({
   oauthUrl: config.value.ENODE_OAUTH_URL,
 });
 
-export async function killChargingAboveBatteryLevel(
-  vehicleId: string,
+export class ActionDoneError extends Error {
+  constructor(message: string) {
+    super(message);
+  }
+}
+
+export async function killCharging(vehicleId: string) {
+  const vehicle = await postgres.get<
+    Pick<DB['vehicles'], 'max_charge' | 'user_id' | 'action_id'>
+  >(sql`
+    SELECT max_charge, user_id, action_id
+    FROM vehicles
+    WHERE external_id = ${vehicleId}
+  `);
+
+  await getEnodeVehicles.clear(vehicle.user_id);
+
+  const enodeVehicle = await enode.vehicles.get(vehicleId);
+
+  if (!isChargeLevelAbove(enodeVehicle, vehicle.max_charge)) {
+    logger.info('Charging not finished yet', {
+      vehicleId,
+      maxCharge: vehicle.max_charge,
+      chargeState: enodeVehicle.chargeState,
+    });
+    return;
+  }
+
+  const action = await sendStopAction(enodeVehicle, vehicle.action_id);
+
+  logger.info('Sending STOP action', {
+    vehicleId,
+    action,
+  });
+
+  await postgres.transaction(async () => {
+    await postgres.query(
+      sql`UPDATE vehicles SET action_id = ${action.id}, updated_at = ${new Date()} WHERE external_id = ${vehicleId}`,
+    );
+
+    if (action.state === 'CONFIRMED') {
+      logger.info('Charging is finished, deactivating', {
+        vehicleId,
+      });
+      await deactivateVehicle(vehicleId);
+    }
+
+    await getEnodeVehicles.clear(vehicle.user_id);
+  });
+}
+
+export function isChargeLevelAbove(
+  vehicle: VehicleRecord,
   desiredBatteryLevel: number,
-): Promise<boolean> {
-  const vehicle = await enode.vehicles.get(vehicleId);
+) {
   const chargeState = vehicle.chargeState;
 
   if (chargeState.isFullyCharged) {
-    logger.info('Vehicle is fully charged', { vehicleId });
     return true;
   }
 
-  if (!chargeState.isCharging || !chargeState.batteryLevel) {
+  if (chargeState.batteryLevel == null) {
     return false;
   }
 
-  if (chargeState.batteryLevel < desiredBatteryLevel) {
-    return false;
+  return chargeState.batteryLevel >= desiredBatteryLevel;
+}
+
+export async function sendStopAction(
+  vehicle: VehicleRecord,
+  actionId: string | null,
+): Promise<VehicleActionResponse> {
+  if (actionId) {
+    const action = await enode.vehicles.getAction(actionId);
+    if (action.state !== 'FAILED' && action.state !== 'CANCELLED') {
+      return action;
+    }
   }
 
-  try {
-    const action = await enode.vehicles.charge(vehicle.id, { action: 'STOP' });
-    logger.info('Sent STOP action', action);
-
-    return true;
-  } catch (error: any) {
-    logger.error(error);
-  }
-
-  return false;
+  return enode.vehicles.charge(vehicle.id, {
+    action: 'STOP',
+  });
 }
 
 export async function getVehicleSettings(vehicleIds?: string[]) {
@@ -81,7 +137,7 @@ export async function saveVehicle(
     sql`SELECT * FROM vehicles WHERE external_id = ${vehicleId} FOR UPDATE`,
   );
 
-  const updates = {
+  const updates: Partial<DB['vehicles']> = {
     user_id: userId,
     max_charge: settings.maxCharge,
     is_active: settings.isActive,
@@ -101,7 +157,7 @@ export async function saveVehicle(
 export async function deactivateVehicle(vehicleId: string) {
   await postgres.query(sql`
     UPDATE vehicles
-    SET is_active = FALSE, updated_at = ${new Date()}
+    SET action_id = NULL, is_active = FALSE, updated_at = ${new Date()}
     WHERE external_id = ${vehicleId}
   `);
 }

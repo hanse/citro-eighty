@@ -39,6 +39,8 @@ export interface Vehicles {
   created_at: Date | null;
   /** updated_at */
   updated_at: Date | null;
+  /** action_id */
+  action_id: string | null;
 }
 
 /**

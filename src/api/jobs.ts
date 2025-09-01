@@ -1,18 +1,7 @@
-import {
-  getLogger,
-  sql,
-  type SendEmailOptions,
-} from '@devmoods/express-extras';
+import { type SendEmailOptions } from '@devmoods/express-extras';
 
-import { email, jobs, postgres, slack } from './config.js';
-import {
-  deactivateVehicle,
-  getEnodeVehicles,
-  killChargingAboveBatteryLevel,
-} from './services.js';
-import { type DB } from '../types/db.gen.js';
-
-const logger = getLogger();
+import { email, jobs, slack } from './config.js';
+import { killCharging } from './services.js';
 
 export const sendEmailJob = jobs.job(async function sendEmail(
   options: SendEmailOptions,
@@ -34,27 +23,8 @@ interface KillChargingJobOptions {
   vehicleId: string;
 }
 
-export const killChargingJob = jobs.job(async function killCharging({
+export const killChargingJob = jobs.job(async function killChargingJob({
   vehicleId,
 }: KillChargingJobOptions) {
-  const vehicle = await postgres.get<
-    Pick<DB['vehicles'], 'max_charge' | 'user_id'>
-  >(
-    sql`SELECT max_charge, user_id FROM vehicles WHERE external_id = ${vehicleId}`,
-  );
-
-  const isKilled = await killChargingAboveBatteryLevel(
-    vehicleId,
-    vehicle.max_charge,
-  );
-
-  if (isKilled) {
-    logger.info(`Killed charging for vehicle ${vehicleId}`);
-    await postgres.transaction(async () => {
-      await deactivateVehicle(vehicleId);
-    });
-    await getEnodeVehicles.clear(vehicle.user_id);
-  } else {
-    logger.info('Not finished charging yet', { vehicleId });
-  }
+  await killCharging(vehicleId);
 });

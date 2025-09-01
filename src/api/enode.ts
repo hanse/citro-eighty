@@ -129,7 +129,7 @@ class Vehicles {
   async charge(vehicleId: string, payload: { action: 'START' | 'STOP' }) {
     const accessToken = await this.enode.getAccessToken();
 
-    const response = await this.enode.fetch<VehicleChargeResponse>(
+    const response = await this.enode.fetch<VehicleActionResponse>(
       `/vehicles/${vehicleId}/charging`,
       {
         method: 'POST',
@@ -233,19 +233,6 @@ export interface VehicleRecord {
   location: Record<string, any>;
 }
 
-export interface VehicleChargeResponse {
-  id: string;
-  userId: string;
-  state: string;
-  createdAt: string;
-  updatedAt: string;
-  completedAt: string | null;
-  targetId: string;
-  targetType: string;
-  kind: string;
-  failureReason: string | null;
-}
-
 export interface PaginatedResponse<T> {
   data: T[];
   pagination: {
@@ -257,8 +244,7 @@ export interface PaginatedResponse<T> {
 export interface VehicleActionResponse {
   id: string;
   userId: string;
-  vehicleId: string;
-  state: string;
+  state: 'PENDING' | 'CONFIRMED' | 'FAILED' | 'CANCELLED';
   completedAt: string | null;
   createdAt: string;
   updatedAt: string;

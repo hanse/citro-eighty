@@ -22,6 +22,5 @@
   "description": "Stop your Citroën EV charger at 80%",
   "lang": "en",
   "dir": "ltr",
-  "prefer_related_applications": true,
-  "handle_links": "preferred"
+  "prefer_related_applications": true
 }
