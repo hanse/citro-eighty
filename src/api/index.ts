@@ -26,16 +26,13 @@ export const app = express();
 
 const logger = getLogger();
 
-app.set('trust proxy', true);
-
-app.use(before({ csrf: true }));
-app.use(auth.before());
+app.use(before({ csrf: true, auth }));
 
 app.use('/api/auth', auth.createRouter());
 
 app.use(
   '/admin',
-  auth.isAuthorized((u) => u.isSuperuser),
+  auth.protect((u) => u.isSuperuser),
   admin({
     postgres,
     uiOptions: {
@@ -47,7 +44,7 @@ app.use(
 const api = createRouter();
 app.use('/api', api.getRouter());
 
-api.post('/setup', {}, auth.isAuthorized(), async () => {
+api.post('/setup', {}, auth.protect(), async () => {
   const user = auth.useCurrentUser()!;
   logger.info('setup initiated', { user });
   const link = await enode.users.link(user.id);
@@ -61,7 +58,7 @@ api.post('/setup', {}, auth.isAuthorized(), async () => {
   };
 });
 
-api.get('/vehicles', {}, auth.isAuthorized(), async () => {
+api.get('/vehicles', {}, auth.protect(), async () => {
   const user = auth.useCurrentUser()!;
   const linkedVehicles = await getEnodeVehicles(user.id);
   const settingsByVehicleId = await getVehicleSettings(
@@ -98,7 +95,7 @@ const chargeInput = type({
 api.put(
   '/charges/:vehicleId',
   { request: chargeInput },
-  auth.isAuthorized(),
+  auth.protect(),
   async (req) => {
     const user = auth.useCurrentUser()!;
     const vehicleId = req.params.vehicleId;

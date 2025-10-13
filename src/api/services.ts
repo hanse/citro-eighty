@@ -1,8 +1,7 @@
-import 'dotenv/config';
-
+import { config } from '@devmoods/config';
 import { getLogger, sql } from '@devmoods/express-extras';
 
-import { cache, config, postgres } from './config.js';
+import { cache, postgres } from './config.js';
 import {
   Enode,
   type VehicleActionResponse,
@@ -13,10 +12,10 @@ import { type DB } from '../types/db.gen.js';
 const logger = getLogger();
 
 export const enode = new Enode({
-  clientId: config.value.ENODE_CLIENT_ID,
-  clientSecret: config.value.ENODE_CLIENT_SECRET,
-  apiUrl: config.value.ENODE_API_URL,
-  oauthUrl: config.value.ENODE_OAUTH_URL,
+  clientId: config.ENODE_CLIENT_ID,
+  clientSecret: config.ENODE_CLIENT_SECRET,
+  apiUrl: config.ENODE_API_URL,
+  oauthUrl: config.ENODE_OAUTH_URL,
 });
 
 export class ActionDoneError extends Error {

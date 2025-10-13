@@ -1,5 +1,6 @@
 import * as crypto from 'node:crypto';
 
+import { config } from '@devmoods/config';
 import {
   createAuth,
   DoesNotExistError,
@@ -9,7 +10,7 @@ import {
 } from '@devmoods/express-extras';
 import { snakeToCamelCase } from '@devmoods/fetch';
 
-import { config, postgres, redis } from './config.js';
+import { postgres, redis } from './config.js';
 import { sendEmailJob } from './jobs.js';
 import { type DB } from '../types/db.gen.js';
 
@@ -82,7 +83,7 @@ The code is valid for 5 minutes.
 
 On the web, you can also use this link:
 
-${config.value.PUBLIC_URL}/auth/magic-link/${temporaryToken}
+${config.PUBLIC_URL}/auth/magic-link/${temporaryToken}
 
 The link will expire in 1 hour.
   `;

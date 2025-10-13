@@ -1,7 +1,6 @@
+import { config } from '@devmoods/config';
 import { getLogger } from '@devmoods/express-extras';
 import { createFetch } from '@devmoods/fetch';
-
-import { config } from './config.js';
 
 const logger = getLogger();
 
@@ -169,7 +168,7 @@ class Users {
   async link(
     userId: string,
     {
-      redirectUri = config.value.ENODE_LINK_REDIRECT_URI,
+      redirectUri = config.ENODE_LINK_REDIRECT_URI,
     }: { redirectUri?: string } = {},
   ) {
     const accessToken = await this.enode.getAccessToken();

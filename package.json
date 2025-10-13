@@ -15,29 +15,30 @@
     "generate-types": "bin/server manage generate-db && pnpm run lint --fix && pnpm run format"
   },
   "dependencies": {
-    "@devmoods/express-extras": "^0.64.0",
+    "@devmoods/config": "^0.2.0",
+    "@devmoods/express-extras": "^0.66.1",
     "@devmoods/fetch": "^4.2.0",
     "@devmoods/postgres-admin": "^0.12.0",
     "@devmoods/ui": "^2.11.0",
     "@standard-schema/spec": "^1.0.0",
-    "@types/react": "^19.1.13",
-    "@types/react-dom": "^19.1.9",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
     "arktype": "2.1.22",
-    "dotenv": "^17.2.2",
+    "dotenv": "^17.2.3",
     "express": "4",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "react-helmet-async": "^2.0.5",
-    "react-router": "^7.9.1"
+    "react-router": "^7.9.4"
   },
   "devDependencies": {
-    "@devmoods/eslint-config": "^2.12.0",
-    "@types/node": "^24.5.2",
-    "eslint": "^9.36.0",
+    "@devmoods/eslint-config": "^2.14.0",
+    "@types/node": "^24.7.2",
+    "eslint": "^9.37.0",
     "prettier": "^3.6.2",
-    "tsx": "^4.20.5",
-    "typescript": "^5.9.2",
-    "vite": "^7.1.6"
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.9"
   },
   "prettier": {
     "singleQuote": true
