@@ -23,7 +23,7 @@
     "@standard-schema/spec": "^1.0.0",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
-    "arktype": "2.1.22",
+    "arktype": "2.1.23",
     "dotenv": "^17.2.3",
     "express": "4",
     "react": "^19.2.0",
@@ -33,12 +33,12 @@
   },
   "devDependencies": {
     "@devmoods/eslint-config": "^2.14.0",
-    "@types/node": "^24.7.2",
+    "@types/node": "^24.8.1",
     "eslint": "^9.37.0",
     "prettier": "^3.6.2",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
-    "vite": "^7.1.9"
+    "vite": "^7.1.10"
   },
   "prettier": {
     "singleQuote": true
