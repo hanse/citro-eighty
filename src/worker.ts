@@ -19,4 +19,3 @@ const worker = await createFaktoryWorker({
 });
 
 await worker.start();
-await redis.quit();
