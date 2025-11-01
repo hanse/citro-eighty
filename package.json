@@ -16,29 +16,30 @@
   },
   "dependencies": {
     "@devmoods/config": "^0.2.0",
-    "@devmoods/express-extras": "^0.66.1",
+    "@devmoods/express-extras": "^0.69.0",
     "@devmoods/fetch": "^4.2.0",
-    "@devmoods/postgres-admin": "^0.12.0",
-    "@devmoods/ui": "^2.11.0",
+    "@devmoods/postgres-admin": "^0.14.0",
+    "@devmoods/ui": "^2.13.0",
     "@standard-schema/spec": "^1.0.0",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
-    "arktype": "2.1.23",
+    "arktype": "2.1.25",
     "dotenv": "^17.2.3",
     "express": "4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-helmet-async": "^2.0.5",
-    "react-router": "^7.9.4"
+    "react-router": "^7.9.5"
   },
   "devDependencies": {
-    "@devmoods/eslint-config": "^2.14.0",
-    "@types/node": "^24.8.1",
-    "eslint": "^9.37.0",
+    "@devmoods/eslint-config": "^2.15.0",
+    "@types/node": "^24.9.2",
+    "eslint": "^9.39.0",
     "prettier": "^3.6.2",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
-    "vite": "^7.1.10"
+    "vite": "^7.1.12",
+    "vitest": "^4.0.6"
   },
   "prettier": {
     "singleQuote": true
