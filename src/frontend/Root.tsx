@@ -13,8 +13,8 @@ import {
   ToastProvider,
   createTheme,
 } from '@devmoods/ui';
+import { Helmet, HelmetProvider } from '@devmoods/ui/helmet';
 import { type ReactNode, StrictMode } from 'react';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { NavLink, Outlet, useRouteError, type RouteObject } from 'react-router';
 
 import { MagicLinkOtp, SignedOut, VerifyMagicLink } from './Auth.jsx';
