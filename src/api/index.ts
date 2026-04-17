@@ -21,6 +21,7 @@ import {
   getVehicleSettings,
   saveVehicle,
 } from './services.js';
+import { closeSentry, sentryErrorHandler } from '@devmoods/sentry';
 
 export const app = express();
 
@@ -121,12 +122,17 @@ export async function createServer() {
     await Promise.all([redis.quit(), postgres.end()]);
   };
 
+  const afterShutdown = async () => {
+    await closeSentry();
+  };
+
   const healthCheck = async () => {
     await Promise.all([redis.ping(), postgres.query('SELECT 1')]);
   };
 
   const server = createExpressServer(app, {
     onShutdown,
+    afterShutdown,
     healthCheck,
   });
 
@@ -140,6 +146,7 @@ export async function createServer() {
   });
   app.use(ssr);
   app.use(notFound());
+  app.use(sentryErrorHandler())
   app.use(errorHandler());
 
   return {

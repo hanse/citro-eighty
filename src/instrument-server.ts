@@ -1,4 +1,11 @@
-import { sentryOptions } from '@devmoods/express-extras';
-import * as Sentry from '@sentry/node';
+import { addDefaultLoggerOutput, metrics } from '@devmoods/express-extras';
+import {
+  initSentry,
+  SentryLoggerAdapter,
+  SentryMetricsAdapter,
+} from '@devmoods/sentry';
 
-Sentry.init(await sentryOptions());
+initSentry();
+
+addDefaultLoggerOutput(new SentryLoggerAdapter());
+metrics.subscribe(new SentryMetricsAdapter());
