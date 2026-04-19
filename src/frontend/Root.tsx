@@ -1,8 +1,6 @@
 import '@devmoods/ui/global.css';
 import '@devmoods/ui/styles.css';
-
 import './index.css';
-
 import {
   ErrorBoundary,
   Panel,

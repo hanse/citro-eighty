@@ -8,6 +8,7 @@ import {
 } from '@devmoods/express-extras';
 import { createSsrMiddleware } from '@devmoods/express-extras/vite/ssr';
 import { admin } from '@devmoods/postgres-admin';
+import { closeSentry, sentryErrorHandler } from '@devmoods/sentry';
 import { type } from 'arktype';
 import express from 'express';
 
@@ -21,7 +22,6 @@ import {
   getVehicleSettings,
   saveVehicle,
 } from './services.js';
-import { closeSentry, sentryErrorHandler } from '@devmoods/sentry';
 
 export const app = express();
 
@@ -146,7 +146,7 @@ export async function createServer() {
   });
   app.use(ssr);
   app.use(notFound());
-  app.use(sentryErrorHandler())
+  app.use(sentryErrorHandler());
   app.use(errorHandler());
 
   return {

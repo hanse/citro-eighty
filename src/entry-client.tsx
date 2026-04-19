@@ -1,9 +1,7 @@
-// eslint-disable-next-line import/order
+// oxlint-disable-next-line import/order
 import 'vite/modulepreload-polyfill';
-
-// eslint-disable-next-line import/order
+// oxlint-disable-next-line import/order
 import { hydrateRoot } from 'react-dom/client';
-
 import { createBrowserRouter, RouterProvider } from 'react-router';
 
 import { AuthProvider } from './frontend/Auth.js';

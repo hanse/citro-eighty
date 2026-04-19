@@ -1,5 +1,4 @@
 import 'dotenv/config';
-
 import { define, t, loadConfig } from '@devmoods/config';
 import { config } from '@devmoods/express-extras/config';
 

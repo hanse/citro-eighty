@@ -12,6 +12,7 @@ import { snakeToCamelCase } from '@devmoods/fetch';
 
 import { postgres, redis } from './config.js';
 import { sendEmailJob } from './jobs.js';
+
 import { type DB } from '../types/db.gen.js';
 
 const sha256 = (input: string) =>

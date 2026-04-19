@@ -5,7 +5,7 @@ import {
   SentryMetricsAdapter,
 } from '@devmoods/sentry';
 
-initSentry();
+await initSentry();
 
 addDefaultLoggerOutput(new SentryLoggerAdapter());
 metrics.subscribe(new SentryMetricsAdapter());
