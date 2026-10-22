@@ -41,19 +41,5 @@
     "typescript": "^6.0.3",
     "vite": "^8.0.8",
     "vitest": "^4.1.4"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "bcrypt",
-      "argon2",
-      "@sentry-internal/node-cpu-profiler",
-      "@sentry-internal/node-native-stacktrace"
-    ],
-    "updateConfig": {
-      "ignoreDependencies": [
-        "express"
-      ]
-    }
   }
 }
