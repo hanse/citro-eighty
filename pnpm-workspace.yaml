@@ -2,6 +2,8 @@ allowBuilds:
   '@parcel/watcher': false
   '@sentry-internal/node-cpu-profiler': true
   '@sentry-internal/node-native-stacktrace': true
+  '@sentry/node-cpu-profiler': true
+  '@sentry/node-native-stacktrace': true
   argon2: true
   bcrypt: true
   esbuild: true
