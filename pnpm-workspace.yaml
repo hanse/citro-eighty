@@ -19,3 +19,4 @@ publicHoistPattern:
 updateConfig:
   ignoreDependencies:
     - express
+    - typescript
