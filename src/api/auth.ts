@@ -55,7 +55,7 @@ export const auth = createAuth({
           }
         });
       },
-      onLoginRequest: async (user, temporaryToken, otp) => {
+      onLoginRequest: async (user, _challengeId, temporaryToken, otp) => {
         await sendEmailJob.delay({
           to: user.email,
           subject: 'Your login to Citro 80.',
