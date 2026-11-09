@@ -9,7 +9,12 @@ import {
   useQuery,
 } from '@devmoods/ui';
 import { createContext, use, useRef, type ReactNode } from 'react';
-import { Navigate, useNavigate, useParams } from 'react-router';
+import {
+  Navigate,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router';
 
 import { fetch } from './fetch.js';
 
@@ -34,14 +39,20 @@ export function MagicLinkLoginForm() {
   const emailRef = useRef<HTMLInputElement>(null);
 
   const mutation = useMutation(async ({ email }: { email: string }) => {
-    await fetch('/auth/passwordless/request-token', {
-      method: 'POST',
-      body: JSON.stringify({
-        email,
-      }),
-    });
+    const response = await fetch<{ challengeId: string }>(
+      '/auth/passwordless/request-token',
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          email,
+        }),
+      },
+    );
 
-    navigate('/otp');
+    const params = new URLSearchParams({
+      challengeId: response.jsonData!.challengeId,
+    });
+    navigate(`/otp?${params}`);
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -138,11 +149,15 @@ export function VerifyMagicLink() {
 }
 
 export function MagicLinkOtp() {
+  const [searchParams] = useSearchParams();
+  const challengeId = searchParams.get('challengeId');
+
   const mutation = useMutation(({ otp }: { otp: string }) => {
     return fetch(`/auth/passwordless/login`, {
       method: 'POST',
       body: JSON.stringify({
         type: 'otp',
+        challengeId,
         otp,
       }),
     });
