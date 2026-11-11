@@ -8,6 +8,9 @@ allowBuilds:
   bcrypt: true
   esbuild: true
 
+minimumReleaseAgeExclude:
+  - '@devmoods/*'
+
 publicHoistPattern:
   - '*types*'
   - '*@types*'
