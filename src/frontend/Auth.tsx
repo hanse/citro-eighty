@@ -55,7 +55,7 @@ export function MagicLinkLoginForm() {
     navigate(`/otp?${params}`);
   });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     await mutation.mutate({
       email: emailRef.current?.value ?? '',
@@ -163,7 +163,7 @@ export function MagicLinkOtp() {
     });
   });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const otp = formData.get('otp') as string;
