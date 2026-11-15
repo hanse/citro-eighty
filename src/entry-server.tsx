@@ -1,4 +1,7 @@
-import { type SsrRenderOptions } from '@devmoods/express-extras/vite/types';
+import {
+  type SsrRenderOptions,
+  type SsrRenderResult,
+} from '@devmoods/express-extras/vite/types';
 import { renderToString } from 'react-dom/server';
 import {
   StaticRouterProvider,
@@ -7,9 +10,12 @@ import {
 } from 'react-router';
 
 import { AuthProvider } from './frontend/Auth.js';
-import { Root, routes } from './frontend/Root.js';
+import { type HelmetServerState, Root, routes } from './frontend/Root.js';
 
-export async function render(req: Request, options: SsrRenderOptions) {
+export async function render(
+  req: Request,
+  options: SsrRenderOptions,
+): Promise<SsrRenderResult> {
   const { query } = createStaticHandler(routes);
   const context = await query(req);
 
@@ -19,7 +25,7 @@ export async function render(req: Request, options: SsrRenderOptions) {
 
   const router = createStaticRouter(routes, context);
 
-  const helmetContext: Record<string, any> = {};
+  let helmetState: HelmetServerState | undefined;
 
   const initialData = await options.getInitialData(req);
 
@@ -55,7 +61,11 @@ export async function render(req: Request, options: SsrRenderOptions) {
       </head>
       <body>
         <div id="root">
-          <Root helmetContext={helmetContext}>
+          <Root
+            onHelmetState={(state) => {
+              helmetState = state;
+            }}
+          >
             <AuthProvider currentUser={currentUser}>
               <StaticRouterProvider
                 router={router}
@@ -82,6 +92,7 @@ export async function render(req: Request, options: SsrRenderOptions) {
 
   return {
     html,
-    context: helmetContext.helmet,
+    context: helmetState,
+    status: context.statusCode,
   };
 }

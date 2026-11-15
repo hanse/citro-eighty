@@ -12,8 +12,8 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0
       '@devmoods/express-extras':
-        specifier: ^0.78.0
-        version: 0.78.0(@opentelemetry/api@1.10.0)(@rolldown/plugin-babel@0.3.1(@babel/core@8.1.0)(rolldown@1.2.18)(vite@8.3.7(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15)))(@vitejs/plugin-react@6.3.0(@rolldown/plugin-babel@0.3.1(@babel/core@8.1.0)(rolldown@1.2.18)(vite@8.3.7(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15)))(babel-plugin-react-compiler@1.0.0)(vite@8.3.7(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15)))(arktype@2.2.9)(babel-plugin-react-compiler@1.0.0)(express@4.22.1)(faktory-worker@4.7.1)(vite@8.3.7(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15))
+        specifier: ^0.78.1
+        version: 0.78.1(@opentelemetry/api@1.10.0)(@rolldown/plugin-babel@0.3.1(@babel/core@8.1.0)(rolldown@1.2.18)(vite@8.3.7(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15)))(@vitejs/plugin-react@6.3.0(@rolldown/plugin-babel@0.3.1(@babel/core@8.1.0)(rolldown@1.2.18)(vite@8.3.7(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15)))(babel-plugin-react-compiler@1.0.0)(vite@8.3.7(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15)))(arktype@2.2.9)(babel-plugin-react-compiler@1.0.0)(express@4.22.1)(faktory-worker@4.7.1)(vite@8.3.7(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15))
       '@devmoods/fetch':
         specifier: ^4.3.1
         version: 4.3.1
@@ -199,8 +199,8 @@ packages:
   '@devmoods/config@0.3.0':
     resolution: {integrity: sha512-oyUHBJmEQnNajAVWVooisHhwAozOhMlDGW2SaSKitQJaxZ9A/5cIjEB7RZz4SZ+lu8zqCxaWjUrU36ZyQ1duXA==}
 
-  '@devmoods/express-extras@0.78.0':
-    resolution: {integrity: sha512-hXF8v5RxJG5TQ7PREbIg3bcJLyyRYgTyvVsveyf0QW+K6Kd8Q6o0wGBDx9JaNb9EZLdCCiyXeSq0Su8VVARF9w==}
+  '@devmoods/express-extras@0.78.1':
+    resolution: {integrity: sha512-tdbMXX8uAP7hYHryPJOEHVrcY2qxydlXbOamwU9rzGq11UaUyhFtqaGmpSI/aGBMvHeVjEKM22qw0d3E6YzKDA==}
     engines: {node: '>=20 <27'}
     peerDependencies:
       '@hey-api/openapi-ts': ^0.99.0
@@ -2388,7 +2388,7 @@ snapshots:
 
   '@devmoods/config@0.3.0': {}
 
-  '@devmoods/express-extras@0.78.0(@opentelemetry/api@1.10.0)(@rolldown/plugin-babel@0.3.1(@babel/core@8.1.0)(rolldown@1.2.18)(vite@8.3.7(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15)))(@vitejs/plugin-react@6.3.0(@rolldown/plugin-babel@0.3.1(@babel/core@8.1.0)(rolldown@1.2.18)(vite@8.3.7(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15)))(babel-plugin-react-compiler@1.0.0)(vite@8.3.7(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15)))(arktype@2.2.9)(babel-plugin-react-compiler@1.0.0)(express@4.22.1)(faktory-worker@4.7.1)(vite@8.3.7(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15))':
+  '@devmoods/express-extras@0.78.1(@opentelemetry/api@1.10.0)(@rolldown/plugin-babel@0.3.1(@babel/core@8.1.0)(rolldown@1.2.18)(vite@8.3.7(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15)))(@vitejs/plugin-react@6.3.0(@rolldown/plugin-babel@0.3.1(@babel/core@8.1.0)(rolldown@1.2.18)(vite@8.3.7(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15)))(babel-plugin-react-compiler@1.0.0)(vite@8.3.7(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15)))(arktype@2.2.9)(babel-plugin-react-compiler@1.0.0)(express@4.22.1)(faktory-worker@4.7.1)(vite@8.3.7(@types/node@26.6.6)(esbuild@0.28.2)(tsx@4.23.15))':
     dependencies:
       '@devmoods/config': 0.3.0
       '@devmoods/fetch': 4.3.1
