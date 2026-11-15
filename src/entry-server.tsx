@@ -1,4 +1,7 @@
-import { type SsrRenderOptions } from '@devmoods/express-extras/vite/types';
+import {
+  type SsrRenderOptions,
+  type SsrRenderResult,
+} from '@devmoods/express-extras/vite/types';
 import { renderToString } from 'react-dom/server';
 import {
   StaticRouterProvider,
@@ -9,7 +12,10 @@ import {
 import { AuthProvider } from './frontend/Auth.js';
 import { Root, routes } from './frontend/Root.js';
 
-export async function render(req: Request, options: SsrRenderOptions) {
+export async function render(
+  req: Request,
+  options: SsrRenderOptions,
+): Promise<SsrRenderResult> {
   const { query } = createStaticHandler(routes);
   const context = await query(req);
 
@@ -83,5 +89,6 @@ export async function render(req: Request, options: SsrRenderOptions) {
   return {
     html,
     context: helmetContext.helmet,
+    status: context.statusCode,
   };
 }
