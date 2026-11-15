@@ -10,7 +10,7 @@ import {
 } from 'react-router';
 
 import { AuthProvider } from './frontend/Auth.js';
-import { Root, routes } from './frontend/Root.js';
+import { type HelmetServerState, Root, routes } from './frontend/Root.js';
 
 export async function render(
   req: Request,
@@ -25,7 +25,7 @@ export async function render(
 
   const router = createStaticRouter(routes, context);
 
-  const helmetContext: Record<string, any> = {};
+  let helmetState: HelmetServerState | undefined;
 
   const initialData = await options.getInitialData(req);
 
@@ -61,7 +61,11 @@ export async function render(
       </head>
       <body>
         <div id="root">
-          <Root helmetContext={helmetContext}>
+          <Root
+            onHelmetState={(state) => {
+              helmetState = state;
+            }}
+          >
             <AuthProvider currentUser={currentUser}>
               <StaticRouterProvider
                 router={router}
@@ -88,7 +92,7 @@ export async function render(
 
   return {
     html,
-    context: helmetContext.helmet,
+    context: helmetState,
     status: context.statusCode,
   };
 }

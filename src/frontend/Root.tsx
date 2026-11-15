@@ -12,7 +12,7 @@ import {
   createTheme,
 } from '@devmoods/ui';
 import { Helmet, HelmetProvider } from '@devmoods/ui/helmet';
-import { type ReactNode, StrictMode } from 'react';
+import { type ComponentProps, type ReactNode, StrictMode } from 'react';
 import { NavLink, Outlet, useRouteError, type RouteObject } from 'react-router';
 
 import { MagicLinkOtp, SignedOut, VerifyMagicLink } from './Auth.jsx';
@@ -121,15 +121,20 @@ export const routes: RouteObject[] = [
   },
 ];
 
+/** What Helmet gives on the server: title, meta, link and script tags. */
+export type HelmetServerState = Parameters<
+  NonNullable<ComponentProps<typeof HelmetProvider>['onServerState']>
+>[0];
+
 interface RootProps {
-  helmetContext?: Record<string, any>;
+  onHelmetState?: (state: HelmetServerState) => void;
   children: ReactNode;
 }
 
-export function Root({ children, helmetContext }: RootProps) {
+export function Root({ children, onHelmetState }: RootProps) {
   return (
     <StrictMode>
-      <HelmetProvider context={helmetContext}>
+      <HelmetProvider onServerState={onHelmetState}>
         <ErrorBoundary>
           <Helmet titleTemplate="%s - Citro 80." />
           <ThemeProvider theme={theme}>
